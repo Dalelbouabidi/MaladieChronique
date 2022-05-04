@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.Analyse;
 import com.example.health.model.RendezVous;
@@ -37,19 +38,10 @@ public class TreatmentActivity extends BaseActivity {
     private RecyclerView rvAnalyses;
     private Button btnAdd;
 
-
-    private DatabaseReference databaseRef;
-    private FirebaseUser firebaseUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treatment);
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
-        databaseRef = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
 
         initView();
 
@@ -71,7 +63,7 @@ public class TreatmentActivity extends BaseActivity {
     }
 
     private void initData() {
-
+        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
         databaseRef.child(CHILD_TREATMENTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

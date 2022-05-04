@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.ui.BaseActivity;
 import com.example.health.ui.MainActivity;
@@ -51,7 +52,6 @@ public class TreatmentAddActivity extends BaseActivity {
     private Button btnSave;
 
     private final List<String> nombreList = new ArrayList<>();
-    private DatabaseReference databaseRef;
 
     private boolean isSuccessAddTreatment = false;
     private boolean isSuccessAddAnalyse = false;
@@ -63,11 +63,6 @@ public class TreatmentAddActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_traitement);
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        databaseRef = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
 
         initView();
 
@@ -178,7 +173,6 @@ public class TreatmentAddActivity extends BaseActivity {
         layoutlistRendez.removeAllViews();
     }
 
-
     private void addMedication() {
         View medicamentView = getLayoutInflater().inflate(R.layout.row_ajouter_medicament, null, false);
         AppCompatSpinner spinner = medicamentView.findViewById(R.id.spinner);
@@ -204,6 +198,7 @@ public class TreatmentAddActivity extends BaseActivity {
 
     private void addDataToFirebase(List<Map<String, String>> treatments, List<Map<String, String>> analyses ,List<Map<String, String>> rendezv) {
 
+        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
         databaseRef.child(CHILD_TREATMENTS).push().setValue(treatments).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

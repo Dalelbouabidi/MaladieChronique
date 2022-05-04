@@ -1,8 +1,12 @@
 package com.example.health.ui.treatment;
 
+import static com.example.health.Constant.CHILD_TREATMENTS;
+import static com.example.health.Constant.MED_NOM;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.Treatment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -24,9 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.TreatmentViewHolder> {
-    private String medicQuantity, medicName;
-    private DatabaseReference databaseReference;
-    Context context;
+    private static String TAG = TreatmentAdapter.class.getSimpleName();
     private ArrayList<Treatment> data = new ArrayList<>();
     public TreatmentAdapter(List<Treatment> data){
         this.data.clear();
@@ -60,31 +62,35 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0){
-                            effacer( position, medicQuantity, medicName);
-
+                            delete(treatment.getMedicName());
                         }
                     }
-
-
-
                 });
                 builder.show();
 
             }
         });
     }
-    private void effacer(int position, String medicQuantity,String medicName) {
-        DatabaseReference databaseReference  = FirebaseDatabase.getInstance().getReference().child("Treatment");
-        Query query =databaseReference.child(medicQuantity).child(medicName);
+    private void delete(String medicName) {
+        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        Query query = databaseRef.child(CHILD_TREATMENTS);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot.getRef().removeValue();
+                Log.d(TAG, "onDataChange : snapshot = " + snapshot.toString());
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        Treatment treatment = snapshot2.getValue(Treatment.class);
+                        if(treatment != null && treatment.getMedicName().equals(medicName)) {
+                            snapshot2.getRef().removeValue();
+                        }
+                    }
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e(TAG, "onCancelled", error.toException());
             }
         });
     }
