@@ -2,12 +2,12 @@ package com.example.health.ui.calendar;
 
 import static com.example.health.Constant.CALENDAR_TREATMENT_DATE;
 import static com.example.health.Constant.CALENDAR_TREATMENT_HOUR;
+import static com.example.health.Constant.CALENDAR_TREATMENT_NAME;
 import static com.example.health.Constant.CHILD_ANALYSES;
 import static com.example.health.Constant.CHILD_CALENDAR;
 import static com.example.health.Constant.CHILD_RENDEZVOUS;
 import static com.example.health.Constant.CHILD_TREATMENTS;
 import static com.example.health.Constant.KEY_EXTRA_TITLE;
-import static com.example.health.Constant.USERS;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -30,19 +30,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.health.AlarmeReceiver;
+import com.example.health.FirebaseUtils;
 import com.example.health.R;
-import com.example.health.model.Analyse;
-import com.example.health.model.RendezVous;
 import com.example.health.model.Treatment;
 import com.example.health.ui.BaseActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
@@ -55,16 +51,14 @@ import java.util.HashMap;
 import java.util.Locale;
 
 public class TreatmentMedicalEditActivity extends BaseActivity {
-    private String  TraitementMedicalDate, TraitementMedicalHeure;
-
     private static final String TAG = TreatmentMedicalEditActivity.class.getSimpleName();
+
     private final DateTimeFormatter DATE_TME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private TextView traitementMedicalDateTV;
     private Button traitementMedicalTimeTV;
     Spinner spinner;
-    ValueEventListener listener;
-    ArrayList<String> list;
+    ArrayList<String> list = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     int heure, minute;
     private LocalTime temps;
@@ -76,38 +70,57 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traitement_medicale_edit);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        databaseReference = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
-        temps = LocalTime.now();
-        traitementMedicalDateTV.setText(CalendarUtils.formattedDate(CalendarUtils.choisirDate));
-        Alarme = findViewById(R.id.alarme);
         initWidgets();
 
-        spinner = (Spinner)findViewById(R.id.spinnerdata);
-        list=new ArrayList<String >();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,list);
+        databaseReference = FirebaseUtils.getDatabaseReference();
+
+        temps = LocalTime.now();
+        traitementMedicalDateTV.setText(CalendarUtils.formattedDate(CalendarUtils.choisirDate));
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spinner.setAdapter(adapter);
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String traitemnt  = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),"Traitement: "+traitemnt,Toast.LENGTH_LONG).show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String traitemnt = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Traitement: " + traitemnt, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        trouvedata();
 
+        fetchData();
 
     }
 
-    private void trouvedata() {
-        listener = databaseReference.child(CHILD_TREATMENTS).addValueEventListener(new ValueEventListener() {
+    private void fetchData() {
+        databaseReference.child(CHILD_TREATMENTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot mydata: snapshot.getChildren()) {
-                    list.add(mydata.getValue(Treatment.class).toString());
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        Treatment treatment = snapshot2.getValue(Treatment.class);
+                        if (treatment != null) {
+                            list.add(treatment.getMedicName());
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(TreatmentMedicalEditActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        databaseReference.child(CHILD_ANALYSES).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot mydata : snapshot.getChildren()) {
+                    //list.add(mydata.getValue(Analyse.class).toString());
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -118,26 +131,11 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
 
             }
         });
-        listener = databaseReference.child(CHILD_ANALYSES).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(CHILD_RENDEZVOUS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot mydata: snapshot.getChildren()) {
-                    list.add(mydata.getValue(Analyse.class).toString());
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(TreatmentMedicalEditActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        listener = databaseReference.child(CHILD_RENDEZVOUS).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot mydata: snapshot.getChildren()) {
-                    list.add(mydata.getValue(RendezVous.class).toString());
+                for (DataSnapshot mydata : snapshot.getChildren()) {
+                    //list.add(mydata.getValue(RendezVous.class).toString());
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -155,31 +153,37 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         traitementMedicalTimeTV = findViewById(R.id.traitementMedicalTimeTV);
         traitementMedicalDateTV = findViewById(R.id.traitementMedicalDateTV);
+        Alarme = findViewById(R.id.alarme);
+        spinner = findViewById(R.id.spinnerdata);
     }
 
 
     public void enregistrerTraitementMedicalAction(View view) {
-        TraitementMedicalDate = traitementMedicalDateTV.getText().toString();
-        TraitementMedicalHeure = traitementMedicalTimeTV.getText().toString();
+        String treatmentMedicalDate = traitementMedicalDateTV.getText().toString();
+        String treatmentMedicalTime = traitementMedicalTimeTV.getText().toString();
+        String treatmentMedicalNom = spinner.getSelectedItem().toString();
 
-        if (TextUtils.isEmpty(TraitementMedicalDate)) {
+        if (TextUtils.isEmpty(treatmentMedicalDate)) {
             traitementMedicalDateTV.setError("Svp entrez votre date de Traitement");
-        } else if (TextUtils.isEmpty(TraitementMedicalHeure)) {
+        } else if (TextUtils.isEmpty(treatmentMedicalTime)) {
             traitementMedicalTimeTV.setError("Svp entrez votre  heure de Traitement");
         } else {
-            addDataToBase( TraitementMedicalDate, TraitementMedicalHeure);
-
+            addDataToBase(treatmentMedicalNom, treatmentMedicalDate, treatmentMedicalTime);
         }
 
+        if (Alarme.isChecked()) {
+            createAlarm(CalendarUtils.choisirDate, temps, treatmentMedicalNom);
+        }
         startActivity(new Intent(TreatmentMedicalEditActivity.this, SemaineViewActivity.class));
         finish();
 
     }
 
-    private void addDataToBase( String TraitementMedicalDate, String TraitementMedicalHeure) {
+    private void addDataToBase(String treatmentMedicalNom, String treatmentMedicalDate, String treatmentMedicalTime) {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(CALENDAR_TREATMENT_DATE, TraitementMedicalDate);
-        hashMap.put(CALENDAR_TREATMENT_HOUR, TraitementMedicalHeure);
+        hashMap.put(CALENDAR_TREATMENT_NAME, treatmentMedicalNom);
+        hashMap.put(CALENDAR_TREATMENT_DATE, treatmentMedicalDate);
+        hashMap.put(CALENDAR_TREATMENT_HOUR, treatmentMedicalTime);
 
         databaseReference.child(CHILD_CALENDAR).push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
