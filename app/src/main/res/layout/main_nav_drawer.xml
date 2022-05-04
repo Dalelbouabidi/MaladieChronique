@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgCover"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:onClick="ClickLogo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/chronics"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#88E4A3E1"
+            app:layout_constraintBottom_toBottomOf="@id/imgCover"
+            app:layout_constraintStart_toStartOf="@id/imgCover">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/maladie"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="Maladie Chronique"
+                android:textAlignment="center"
+                android:textColor="#E408DA"
+                android:textIsSelectable="true"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/imgLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgLogo"
+                app:layout_constraintTop_toTopOf="@id/imgLogo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#E408DA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgCover" />
+
+        <TextView
+            android:id="@+id/tvProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_profil"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickProfile"
+            android:padding="9dp"
+            android:text="Profile"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separator" />
+
+        <TextView
+            android:id="@+id/tvTypeMal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_ajout"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickAjouterTypeMaladie"
+            android:padding="9dp"
+            android:text="Ajouter Type Maladie"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvProfile" />
+
+        <TextView
+            android:id="@+id/tvConsult"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_traitement"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickConsulterTraitement"
+            android:padding="9dp"
+            android:text="Ajouter Traitement"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTypeMal" />
+
+        <TextView
+            android:id="@+id/tvManageAgenda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_agenda"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickManageCalendar"
+            android:padding="9dp"
+            android:text="Gérer Calendrier"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConsult" />
+
+        <TextView
+            android:id="@+id/tvConsultAgenda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_agenda"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickConsulterAgenda"
+            android:padding="9dp"
+            android:text="Consulter Calendrier"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvManageAgenda" />
+
+
+        <TextView
+            android:id="@+id/tvArticleMed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_article"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickArticleMedical"
+            android:padding="9dp"
+            android:text="Article Médicale"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConsultAgenda" />
+
+        <View
+            android:id="@+id/separ1"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="0.5dp"
+            android:background="#E408DA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvArticleMed" />
+
+        <TextView
+            android:id="@+id/deconnx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="8dp"
+            android:text="Déconnexion"
+            android:textColor="#E831C9"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separ1" />
+
+
+        <TextView
+            android:id="@+id/tvquitter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_power"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E831C9"
+            android:gravity="center_vertical"
+            android:onClick="ClickQuitter"
+            android:padding="9dp"
+            android:text="Quitter"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deconnx" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

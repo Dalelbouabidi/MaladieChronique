@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/main_toolbar" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="140dp"
+            android:layout_height="117dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_profil" />
+
+
+
+        <EditText
+            android:id="@+id/nom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/person"
+            android:drawablePadding="10dp"
+            android:hint="nom d'utilisateur"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:paddingLeft="20dp"
+            android:textColorHint="#8F000000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/calendar"
+            android:drawablePadding="10dp"
+            android:hint="date de naissance"
+            android:textColor="@color/black"
+            android:inputType="date"
+            android:paddingLeft="20dp"
+            android:textColorHint="#8F000000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="10dp"
+            android:hint="téléphone"
+            android:maxLength="8"
+            android:textColor="@color/black"
+            android:inputType="number"
+            android:paddingLeft="20dp"
+            android:textColorHint="#8F000000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="10dp"
+            android:hint="email"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:textColorHint="#8F000000"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/mot_passe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10dp"
+            android:hint="mot de passe"
+            android:textColor="@color/black"
+            android:paddingLeft="20dp"
+            android:textColorHint="#8F000000"
+            android:textSize="25dp" />
+
+
+
+        <TextView
+            android:id="@+id/TVmodifier"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:background="@drawable/button_bg"
+            android:drawableLeft="@drawable/ic_baseline_edit_24"
+            android:gravity="center"
+            android:onClick="modifier"
+            android:paddingLeft="10dp"
+            android:textAllCaps="false"
+            android:text="Modifier Profile"
+            android:textColor="#E9FA2995"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white">
+
+        <include layout="@layout/main_nav_drawer" />
+
+    </RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

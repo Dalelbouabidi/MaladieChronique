@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "820720549500",
+    "firebase_url": "https://maladie-chronique-default-rtdb.firebaseio.com",
+    "project_id": "maladie-chronique",
+    "storage_bucket": "maladie-chronique.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820720549500:android:2afe9e0be97d177e6553f9",
+        "android_client_info": {
+          "package_name": "com.example.health"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820720549500-6rrt1e2evubc6im34g97ii1snuifonpp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn3U1sSubpDBuEOYP8_UGXa1Ro5X-QMIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820720549500-6rrt1e2evubc6im34g97ii1snuifonpp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
