@@ -81,6 +81,7 @@ public class TreatmentAddActivity extends BaseActivity {
         btnSave = findViewById(R.id.sauvegarderbtn);
 
         nombreList.add("Quantité de prise");
+        nombreList.add("1/2");
         nombreList.add("1");
         nombreList.add("2");
         nombreList.add("3");
@@ -198,7 +199,7 @@ public class TreatmentAddActivity extends BaseActivity {
 
     private void addDataToFirebase(List<Map<String, String>> treatments, List<Map<String, String>> analyses ,List<Map<String, String>> rendezv) {
 
-        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         databaseRef.child(CHILD_TREATMENTS).push().setValue(treatments).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

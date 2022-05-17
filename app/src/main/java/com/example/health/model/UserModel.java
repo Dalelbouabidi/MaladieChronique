@@ -1,31 +1,35 @@
 package com.example.health.model;
 
 public class UserModel {
-    private String  userId, nomdutilisateur,datedenaissance,telephone ,email,motdepasse ,sexe;
+    private String userId, nomdutilisateur, datedenaissance, telephone,usertype;
 
     public UserModel() {
 
     }
 
-    public UserModel(String userId, String nomdutilisateur ,String datedenaissance , String telephone, String email,
-                     String motdepasse, String sexe){
-        this.userId = userId;
-        this.nomdutilisateur=nomdutilisateur;
-        this.datedenaissance=datedenaissance;
-        this.telephone=telephone;
-        this.email=email;
-        this.motdepasse=motdepasse;
-        this.sexe =sexe;
+    public UserModel(String nomdutilisateur, String datedenaissance, String telephone, String email,
+                     String motdepasse, String usertype) {
+        this.nomdutilisateur = nomdutilisateur;
+        this.datedenaissance = datedenaissance;
+        this.telephone = telephone;
+        this.usertype = usertype;
     }
-    public UserModel(String nomdutilisateur ,String datedenaissance , String telephone, String email,
-                     String motdepasse ,String sexe){
-        this.nomdutilisateur=nomdutilisateur;
-        this.datedenaissance=datedenaissance;
-        this.telephone=telephone;
-        this.email=email;
-        this.motdepasse=motdepasse;
-        this.sexe=sexe;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserModel userModel = (UserModel) o;
+
+        return userId.equals(userModel.userId);
     }
+
+    @Override
+    public int hashCode() {
+        return userId.hashCode();
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -33,43 +37,37 @@ public class UserModel {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getNomdutilisateur(){
+
+    public String getNomdutilisateur() {
         return nomdutilisateur;
     }
-    public void setNomdutilisateur(String nomdutilisateur){
-        this.nomdutilisateur=nomdutilisateur;
+
+    public void setNomdutilisateur(String nomdutilisateur) {
+        this.nomdutilisateur = nomdutilisateur;
     }
-    public String getDatedenaissance(){
+
+    public String getDatedenaissance() {
         return datedenaissance;
     }
-    public void setDatedenaissance(String datedenaissance){
-        this.datedenaissance=datedenaissance;
+
+    public void setDatedenaissance(String datedenaissance) {
+        this.datedenaissance = datedenaissance;
     }
-    public String getTelephone(){
+
+    public String getTelephone() {
         return telephone;
     }
-    public void setTelephone(String telephone){
-        this.telephone=telephone;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getMotdepasse(){
-        return motdepasse;
-    }
-    public void setMotdepasse(String motdepasse){
-        this.motdepasse=motdepasse;
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
-    public String getSexe() {
-        return sexe;
+    public String getUsertype() {
+        return usertype;
     }
 
-    public void setSexe(String sexe) {
-        sexe = sexe;
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 }
 

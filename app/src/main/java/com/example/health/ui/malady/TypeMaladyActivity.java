@@ -2,6 +2,7 @@ package com.example.health.ui.malady;
 
 import static com.example.health.Constant.CHILD_TYPE_MALADY;
 import static com.example.health.Constant.USERS;
+import static com.example.health.FirebaseUtils.getDataReference;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,10 +40,7 @@ public class TypeMaladyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_malady);
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        databaseRef = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
+        databaseRef = getDataReference();
 
         initView();
 

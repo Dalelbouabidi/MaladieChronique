@@ -114,6 +114,7 @@
         <entry key="app/src/main/res/drawable-v24/bg_circle.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/bg.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/button_bg.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/card_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/edittextbackground.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_baseline_article_24.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.1805" />
@@ -123,6 +124,7 @@
         <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.1805" />
+        <entry key="app/src/main/res/layout/activity_admin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ajouter_traitement.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/layout/activity_article.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />

@@ -4,6 +4,7 @@ import static com.example.health.Constant.CHILD_TYPE_MALADY;
 import static com.example.health.Constant.NAME_DOCTOR;
 import static com.example.health.Constant.NAME_MALADY;
 import static com.example.health.Constant.USERS;
+import static com.example.health.FirebaseUtils.getDataReference;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,31 +32,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddTypeMaladyActivity extends BaseActivity {
-     String[] maladie = {"Diabète", "Dysthyroidies", "Affections hypophysaires", "Affections surrénaliennes", "HTA sévère",
-            "Cardiopathies congénitales et valvulopathies", "Insuffisance cardiaque et troubles du rythme", "Affections coronariennes et leurs complications",
-            "Phlébites", "Tuberculose active", "Insuffisance respiratoire chronique", "Sclérose en plaques", "Epilepise", "Maladie de Parkinson",
-            "Psychoses et névroses", "Insuffisance rénale chronique", "Rhumatismes inflamatoires chronique", "Maladies auto-immunes",
-            "Tumeurs et hémopathies malignes", "Maladies inflamatoires de l'intestin", "Hepatites chroniques actives"};
+    String[] maladie = {"Diabète", "Dysthyroidies", "Affections hypophysaires","Affections surrénaliennes",
+            "HTA sévère", "Cardiopathies congénitales et valvulopathies","Sclérose en plaques",
+            "Affections coronariennes et leurs complications", "Phlébites", "Tuberculose active",
+            "Insuffisance respiratoire chronique","Insuffisance cardiaque et troubles du rythme" ,
+            "Epilepise", "Maladie de Parkinson", "Psychoses et névroses", "Insuffisance rénale chronique"
+            , "Rhumatismes inflamatoires chronique", "Maladies auto-immunes",
+            "Tumeurs et hémopathies malignes", "Maladies inflamatoires de l'intestin",
+            "Hepatites chroniques actives"};
 
 
     EditText NomMedecin;
     Button ajouter;
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterMaladie;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseRef;
-    private FirebaseAuth mAuth;
-    private FirebaseUser firebaseUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type);
-        mAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
-        databaseRef = FirebaseDatabase.getInstance().getReference(USERS).child(firebaseUser.getUid());
+        databaseRef = getDataReference();
         drawerLayout = findViewById(R.id.drawerlayout);
         NomMedecin = findViewById(R.id.NomMedecin);
         ajouter = findViewById(R.id.ajouterbtn);
@@ -79,7 +77,8 @@ public class AddTypeMaladyActivity extends BaseActivity {
                 String nomMed = NomMedecin.getText().toString();
                 if (TextUtils.isEmpty(nomMalady)) {
                     autoCompleteTextView.setError("Svp entrez votre nom de maladie");
-                } else if (TextUtils.isEmpty(nomMed)) {
+                }
+                if (TextUtils.isEmpty(nomMed)) {
                     NomMedecin.setError("Svp entrez votre nom de medecin");
                 } else {
                     addDataToDatabase(nomMalady, nomMed);

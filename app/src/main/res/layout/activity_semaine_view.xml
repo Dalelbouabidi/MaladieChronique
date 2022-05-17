@@ -28,8 +28,8 @@
                 android:backgroundTint="@color/white"
                 android:onClick="previousWeekAction"
                 android:text="@string/back"
-                android:textColor="#03D0F4"
-                android:textSize="20sp"
+                android:textColor="#2196F3"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -49,8 +49,8 @@
                 android:backgroundTint="@color/white"
                 android:onClick="nextWeekAction"
                 android:text="@string/forward"
-                android:textColor="#03D0F4"
-                android:textSize="20sp"
+                android:textColor="#2196F3"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
         </LinearLayout>

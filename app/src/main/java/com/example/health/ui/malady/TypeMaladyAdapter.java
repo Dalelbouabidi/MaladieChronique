@@ -3,7 +3,6 @@ package com.example.health.ui.malady;
 
 import static com.example.health.Constant.CHILD_TYPE_MALADY;
 import static com.example.health.Constant.NAME_MALADY;
-import static com.example.health.Constant.USERS;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -20,12 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.TypeMalady;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -58,7 +54,7 @@ public class TypeMaladyAdapter extends RecyclerView.Adapter<TypeMaladyAdapter.Tr
             public void onClick(View view) {
                 CharSequence[] options = new CharSequence[]{
                         "Effacer",
-                        "Anunuler",
+                        "Annuler",
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
                 builder.setTitle("Effacer");
@@ -73,10 +69,11 @@ public class TypeMaladyAdapter extends RecyclerView.Adapter<TypeMaladyAdapter.Tr
                 builder.show();
             }
         });
+
     }
 
     private void delete(String nameMalady) {
-        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         Query query = databaseRef.child(CHILD_TYPE_MALADY).orderByChild(NAME_MALADY).equalTo(nameMalady);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,7 +97,7 @@ public class TypeMaladyAdapter extends RecyclerView.Adapter<TypeMaladyAdapter.Tr
         return data.size();
     }
 
-    protected static class TreatmentViewHolder extends RecyclerView.ViewHolder {
+    protected static class TreatmentViewHolder extends RecyclerView.ViewHolder  {
 
         public final TextView maladyNom;
         public final TextView maladyMed;
@@ -110,5 +107,7 @@ public class TypeMaladyAdapter extends RecyclerView.Adapter<TypeMaladyAdapter.Tr
             maladyNom = itemView.findViewById(R.id.tv_malady_nom);
             maladyMed = itemView.findViewById(R.id.tv_malady_med);
         }
+
+
     }
 }

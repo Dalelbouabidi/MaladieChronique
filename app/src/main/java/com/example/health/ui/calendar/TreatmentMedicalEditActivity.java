@@ -32,6 +32,8 @@ import androidx.annotation.NonNull;
 import com.example.health.AlarmeReceiver;
 import com.example.health.FirebaseUtils;
 import com.example.health.R;
+import com.example.health.model.Analyse;
+import com.example.health.model.RendezVous;
 import com.example.health.model.Treatment;
 import com.example.health.ui.BaseActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,7 +74,7 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
         setContentView(R.layout.activity_traitement_medicale_edit);
         initWidgets();
 
-        databaseReference = FirebaseUtils.getDatabaseReference();
+        databaseReference = FirebaseUtils.getDataReference();
 
         temps = LocalTime.now();
         traitementMedicalDateTV.setText(CalendarUtils.formattedDate(CalendarUtils.choisirDate));
@@ -81,8 +83,8 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String traitemnt = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Traitement: " + traitemnt, Toast.LENGTH_LONG).show();
+                String traitement = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Traitement: " + traitement, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -103,7 +105,8 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         Treatment treatment = snapshot2.getValue(Treatment.class);
                         if (treatment != null) {
-                            list.add(treatment.getMedicName());
+                            list.add( "Médicament : "+ "          "  +treatment.getMedicName() + "             " +treatment.getMedicQuantity());
+
                         }
                     }
                 }
@@ -120,7 +123,12 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mydata : snapshot.getChildren()) {
-                    //list.add(mydata.getValue(Analyse.class).toString());
+                    for (DataSnapshot mydata1 : mydata.getChildren()){
+                        Analyse analyse = mydata1.getValue(Analyse.class);
+                        if (analyse !=null){
+                            list.add("Analyse :"+"                 "+analyse.getAnalyse());
+                        }
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -134,8 +142,13 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
         databaseReference.child(CHILD_RENDEZVOUS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot mydata : snapshot.getChildren()) {
-                    //list.add(mydata.getValue(RendezVous.class).toString());
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    for (DataSnapshot data1 :data.getChildren()){
+                        RendezVous rendezVous = data1.getValue(RendezVous.class);
+                        if (rendezVous !=null){
+                            list.add("RendezVous : "+"               "+rendezVous.getRendezvous());
+                        }
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

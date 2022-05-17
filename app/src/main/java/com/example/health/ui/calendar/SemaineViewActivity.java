@@ -19,6 +19,7 @@ import androidx.core.util.Pair;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.TreatmentMedical;
 import com.example.health.ui.BaseActivity;
@@ -121,45 +122,58 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
         List<TreatmentMedical> localTreatmentMedicalList = TreatmentMedical.getTreatmentMedicalByDate(treatmentMedicalList, CalendarUtils.choisirDate);
         TreatmentMedicalAdapter treatmentMedicalAdapter = new TreatmentMedicalAdapter(this, localTreatmentMedicalList);
         traitementMedicalListView.setAdapter(treatmentMedicalAdapter);
-        traitementMedicalListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        traitementMedicalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-              DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
-                Query query = databaseReference.child(CHILD_CALENDAR).child("TreatmentMedical");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CharSequence[] options = new CharSequence[]{
+                        "Effacer",
+                        "Annuler",
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(traitementMedicalListView.getContext());
+                builder.setTitle("Effacer");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot traitementSnapshot : snapshot.getChildren()){
-                            traitementSnapshot.getRef().removeValue();
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0){
+                            delete(traitementMedicalListView);
+
                         }
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-
-                    }
                 });
-
-                final int item = position;
-                new AlertDialog.Builder(SemaineViewActivity.this).setIcon(android.R.drawable.ic_delete)
-                        .setTitle("etes-vous sur ").setMessage("de vouloir supprimer cet traitement")
-                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                localTreatmentMedicalList.remove(item);
-                                treatmentMedicalAdapter.notifyDataSetChanged();
-
-                            }
-                        })
-                        .setNegativeButton("Non",null).show();
-                return true;
+                builder.show();
             }
         });
 
+
+
+
+
+
+
     }
 
+    private void delete(ListView traitementMedicalListView) {
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
+        Query query = databaseRef.child(CHILD_CALENDAR);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1: snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        TreatmentMedical treatmentMedical = snapshot2.getValue(TreatmentMedical.class);
+                        if(treatmentMedical != null && treatmentMedical.equals(traitementMedicalListView)) {
+                            snapshot2.getRef().removeValue();
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
     private void chargerData() {

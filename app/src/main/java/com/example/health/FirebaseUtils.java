@@ -1,5 +1,6 @@
 package com.example.health;
 
+import static com.example.health.Constant.DATA;
 import static com.example.health.Constant.USERS;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -8,10 +9,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseUtils {
-    static public DatabaseReference getDatabaseReference() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+    static public FirebaseUser getCurrentUser(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        return firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
+        return mAuth.getCurrentUser();
+    }
+
+    static public DatabaseReference getUsersReference() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = getCurrentUser();
+        return firebaseDatabase.getReference(USERS);
+    }
+
+    static public DatabaseReference getUserReference() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = getCurrentUser();
+        return firebaseDatabase.getReference(USERS).child(currentUser.getUid());
+    }
+    static public DatabaseReference getDataReference() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = getCurrentUser();
+        return firebaseDatabase.getReference(DATA).child(currentUser.getUid());
     }
 }

@@ -1,13 +1,9 @@
 package com.example.health.ui.treatment;
 
 import static com.example.health.Constant.CHILD_ANALYSES;
-import static com.example.health.Constant.CHILD_TREATMENTS;
-import static com.example.health.Constant.MED_NOM;
-import static com.example.health.Constant.NAME_MALADY;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,7 +51,7 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
             public void onClick(View view) {
                 CharSequence[] options = new CharSequence[]{
                         "Effacer",
-                        "Anunuler",
+                        "Annuler",
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
                 builder.setTitle("Effacer");
@@ -73,12 +69,12 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
     }
 
     private void delete(String nomAnalyse) {
-        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         Query query = databaseRef.child(CHILD_ANALYSES);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("TypeMaladyAdapter", "onDataChange : snapshot = " + snapshot.toString());
+                Log.d("AnalyseAdapter", "onDataChange : snapshot = " + snapshot.toString());
                 for (DataSnapshot snapshot1: snapshot.getChildren()) {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         Analyse analyse = snapshot2.getValue(Analyse.class);
@@ -91,7 +87,7 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TypeMaladyAdapter", "onCancelled", error.toException());
+                Log.e("AnalyseAdapter", "onCancelled", error.toException());
             }
         });
     }

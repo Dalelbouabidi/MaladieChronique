@@ -3,6 +3,7 @@ package com.example.health;
 public class Constant {
 
     public static final String USERS = "USERS";
+    public static final String DATA = "DATA";
     public static final String CHILD_TREATMENTS = "TREATMENTS";
     public static final String CHILD_ANALYSES = "ANALYSES";
     public static final String CHILD_RENDEZVOUS = "RENDEZVOUS";
@@ -15,6 +16,7 @@ public class Constant {
     public static final String RENDEZVOUS = "rendezvous";
     public static final String NAME_MALADY = "nameMalady";
     public static final String NAME_DOCTOR = "nameDoctor";
+
 
     public static final String CALENDAR_TREATMENT_NAME = "treatmentName";
     public static final String CALENDAR_TREATMENT_DATE = "treatmentDate";

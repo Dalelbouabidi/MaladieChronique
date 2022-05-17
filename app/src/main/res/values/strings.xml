@@ -8,9 +8,9 @@
 
     <string name="choisir">Choisir maladie</string>
 
-    <string name="back"><![CDATA[<-]]></string>
-    <string name="forward"><![CDATA[->]]></string>
 
+    <string name="forward"><![CDATA[->]]></string>
+    <string name="back"><![CDATA[<-]]></string>
 
 
 </resources>

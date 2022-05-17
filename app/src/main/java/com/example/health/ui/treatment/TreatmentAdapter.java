@@ -72,7 +72,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
         });
     }
     private void delete(String medicName) {
-        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         Query query = databaseRef.child(CHILD_TREATMENTS);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

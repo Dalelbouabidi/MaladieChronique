@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".HomeAdminActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:text="Bienvenue"
+        android:textStyle="bold"
+        android:textColor="#2196F3"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textSize="40dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/person"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="50dp"
+        android:text="Nom : "
+        android:drawableTint="#2196F3"
+        android:textColor="@color/black"
+        android:paddingLeft="20dp"
+        android:textColorHint="#8F000000"
+        android:textSize="25dp" />
+
+
+    <TextView
+        android:id="@+id/nom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="nom  "
+        android:drawableTint="#2196F3"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:textColor="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:drawableTint="#2196F3"
+        android:drawableLeft="@drawable/calendar"
+        android:drawablePadding="10dp"
+        android:text="date de naissance : "
+        android:textColor="@color/black"
+        android:inputType="date"
+        android:paddingLeft="20dp"
+        android:textColorHint="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="date"
+        android:drawableTint="#2196F3"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:textColor="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:drawableTint="#2196F3"
+        android:drawableLeft="@drawable/call"
+        android:drawablePadding="10dp"
+        android:text="Téléphone : "
+        android:textColor="@color/black"
+        android:inputType="date"
+        android:paddingLeft="20dp"
+        android:textColorHint="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="telephone"
+        android:drawableTint="#2196F3"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:textColor="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:drawableTint="#2196F3"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="10dp"
+        android:text="E-mail : "
+        android:textColor="@color/black"
+        android:inputType="date"
+        android:paddingLeft="20dp"
+        android:textColorHint="#8F000000"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="email"
+        android:drawableTint="#2196F3"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:textColor="#8F000000"
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:drawableTint="#2196F3"
+        android:drawableLeft="@drawable/lock"
+        android:drawablePadding="10dp"
+        android:text="Mot de passe : "
+        android:textColor="@color/black"
+        android:inputType="date"
+        android:paddingLeft="20dp"
+        android:textColorHint="#8F000000"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/mot_passe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:text="motpasse"
+        android:drawableTint="#2196F3"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:textColor="#8F000000"
+        android:textSize="25dp" />
+
+
+</LinearLayout>

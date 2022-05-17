@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Médecin traitant"
+                        android:text="Nom médecin traitant"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_nom_malady"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -110,3 +110,4 @@
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
+

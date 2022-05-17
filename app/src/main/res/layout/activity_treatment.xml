@@ -29,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="Liste des médicaments"
                     android:textSize="20sp"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -82,6 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="Liste des analyses"
                     android:layout_marginTop="20dp"
                     app:layout_constraintTop_toBottomOf="@id/rv_medications"
@@ -100,6 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="Liste des rendez-vous"
                     android:layout_marginTop="20dp"
                     app:layout_constraintTop_toBottomOf="@id/rv_analyses"

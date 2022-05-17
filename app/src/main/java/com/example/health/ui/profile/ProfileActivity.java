@@ -2,9 +2,10 @@ package com.example.health.ui.profile;
 
 import static com.example.health.Constant.USERS;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,8 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends BaseActivity {
-    private EditText nom, date, phone, mail, mot_passe;
+    private TextView nom, date, phone, mail, mot_passe, modifier;
+
     private DatabaseReference databaseReference;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,14 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
         drawerLayout = findViewById(R.id.drawerlayout);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        firebaseUser = mAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference(USERS).child(firebaseUser.getUid());
         nom = findViewById(R.id.nom);
         date = findViewById(R.id.date);
         phone = findViewById(R.id.phone);
         mail = findViewById(R.id.mail);
         mot_passe = findViewById(R.id.mot_passe);
+        modifier = findViewById(R.id.TVmodifier);
         chargeProfile();
     }
 
@@ -45,12 +49,12 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
-                assert userModel != null;
-                nom.setText(userModel.getNomdutilisateur());
-                date.setText(userModel.getDatedenaissance());
-                phone.setText(userModel.getTelephone());
-                mail.setText(userModel.getEmail());
-                mot_passe.setText(userModel.getMotdepasse());
+                if (userModel != null) {
+                    nom.setText(userModel.getNomdutilisateur());
+                    date.setText(userModel.getDatedenaissance());
+                    phone.setText(userModel.getTelephone());
+                    mail.setText(firebaseUser.getEmail());
+                }
             }
 
             @Override
@@ -61,19 +65,14 @@ public class ProfileActivity extends BaseActivity {
     }
 
 
-    public void modifier(View view) {
-        databaseReference.child("telephone").setValue(phone.getText().toString());
-        databaseReference.child("motdepasse").setValue(mot_passe.getText().toString());
-        databaseReference.child("email").setValue(mail.getText().toString());
-
-        Toast.makeText(this, "les données ont été modifiées", Toast.LENGTH_LONG).show();
-
+    public void modifie(View view) {
+        Intent i = new Intent(ProfileActivity.this, ModifierActivity.class);
+        startActivity(i);
     }
 
     public void ClickProfile(View view) {
         recreate();
     }
-
 }
 
 

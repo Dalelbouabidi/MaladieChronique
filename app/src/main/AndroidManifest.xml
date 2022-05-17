@@ -13,25 +13,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Health">
         <activity
-            android:name=".ui.treatment.TreatmentActivity"
+            android:name=".ui.profile.ModifierActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.treatment.TreatmentAddActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.calendar.SemaineViewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.calendar.TreatmentMedicalEditActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.article.detail"
             android:exported="false" />
         <activity
             android:name=".ui.article.ArticleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.consultcalendar.ConsulterAgenda"
+            android:name=".DetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".ui.treatment.TreatmentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".ui.treatment.TreatmentAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.calendar.SemaineViewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".ui.calendar.TreatmentMedicalEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.calendar.CalendarActivity"
@@ -42,6 +51,19 @@
         <activity
             android:name=".ui.malady.TypeMaladyActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ArticleAdminActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"

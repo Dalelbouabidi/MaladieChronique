@@ -15,9 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.health.AdminActivity;
 import com.example.health.ui.article.ArticleActivity;
 import com.example.health.ui.calendar.CalendarActivity;
-import com.example.health.ui.consultcalendar.ConsulterAgenda;
 import com.example.health.ui.malady.TypeMaladyActivity;
 import com.example.health.ui.profile.ProfileActivity;
 import com.example.health.ui.treatment.TreatmentActivity;
@@ -60,10 +60,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         redirectActivity(this, CalendarActivity.class);
     }
 
-    public void ClickConsulterAgenda(View view) {
-        redirectActivity(this, ConsulterAgenda.class);
-    }
-
 
     public void ClickArticleMedical(View view) {
         redirectActivity(this, ArticleActivity.class);
@@ -73,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         quitter(this);
     }
 
-    public static void quitter(final Activity activity) {
+    public  void quitter(final Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         String titleText = "Quitter";
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#E831C9"));
@@ -84,14 +80,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                activity.finishAffinity();
-                System.exit(0);
+                startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                finish();
             }
         });
         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                dialog.cancel();
             }
         });
         AlertDialog dialog = builder.create();

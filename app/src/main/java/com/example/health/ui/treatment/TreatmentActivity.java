@@ -63,7 +63,7 @@ public class TreatmentActivity extends BaseActivity {
     }
 
     private void initData() {
-        DatabaseReference databaseRef = FirebaseUtils.getDatabaseReference();
+        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         databaseRef.child(CHILD_TREATMENTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

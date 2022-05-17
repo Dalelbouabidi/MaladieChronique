@@ -73,7 +73,7 @@
         android:onClick="connexion"
         android:padding="10dp"
         android:text="Connexion"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
             android:padding="5dp"
             android:text="Vous n'avez pas un compte ?"
             android:textColor="#B7000000"
-            android:textSize="19sp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/sinscrire1"
@@ -106,7 +106,7 @@
             android:onClick="sinscrire"
             android:text="S'inscrire"
             android:textColor="#47F9FF"
-            android:textSize="20sp"
+            android:textSize="19dp"
             android:textStyle="bold" />
     </LinearLayout>
 

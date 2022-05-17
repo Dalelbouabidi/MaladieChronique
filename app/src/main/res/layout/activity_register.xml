@@ -122,54 +122,11 @@
             app:layout_constraintStart_toStartOf="@id/email"
             app:layout_constraintTop_toBottomOf="@+id/email" />
 
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="sexe"
-            android:textColor="#8F000000"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/motdepasse"
-            app:layout_constraintTop_toBottomOf="@+id/motdepasse" />
-
-
-        <RadioGroup
-            android:id="@+id/sexe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/tvGender"
-            app:layout_constraintEnd_toEndOf="@id/motdepasse"
-            app:layout_constraintStart_toEndOf="@+id/tvGender"
-            app:layout_constraintTop_toTopOf="@+id/tvGender">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="homme"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="femme"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </RadioGroup>
-
 
         <Button
             android:id="@+id/sinscrire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:backgroundTint="#03D0F4"
             android:onClick="sinscrire"
@@ -179,7 +136,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/motdepasse"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
