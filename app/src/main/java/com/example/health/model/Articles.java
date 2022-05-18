@@ -1,11 +1,24 @@
 package com.example.health.model;
 
 public class Articles {
-   private String titre,description;
-    public Articles(){}
-    public Articles(String titre,String description){
+    private String uid;
+    private String titre;
+    private String description;
+
+    public Articles() {
+    }
+
+    public Articles(String titre, String description) {
         this.titre = titre;
-        this.description=description;
+        this.description = description;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getDescription() {

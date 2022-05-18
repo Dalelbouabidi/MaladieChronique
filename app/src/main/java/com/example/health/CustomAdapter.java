@@ -1,6 +1,7 @@
 package com.example.health;
 
-import static com.example.health.Constant.USERS;
+import static com.example.health.Constant.CHILD_ARTICLES;
+import static com.example.health.FirebaseUtils.getDataReference;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,7 +20,6 @@ import com.example.health.model.Articles;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends BaseAdapter {
     Context c;
     ArrayList<Articles> articless;
-    DatabaseReference ref;
+    DatabaseReference databaseRef = getDataReference();
 
     public CustomAdapter(Context c, ArrayList<Articles> articless) {
         this.c = c;
@@ -52,24 +52,23 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        if(convertView==null)
-        {
-            convertView= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(c).inflate(R.layout.model, viewGroup, false);
         }
 
-        TextView nameTxt= (TextView) convertView.findViewById(R.id.nameTxt);
-        TextView descTxt= (TextView) convertView.findViewById(R.id.descTxt);
+        TextView nameTxt = convertView.findViewById(R.id.nameTxt);
+        TextView descTxt = convertView.findViewById(R.id.descTxt);
 
-        final Articles s= (Articles) this.getItem(position);
+        final Articles article = (Articles) this.getItem(position);
 
-        nameTxt.setText(s.getTitre());
-        descTxt.setText(s.getDescription());
+        nameTxt.setText(article.getTitre());
+        descTxt.setText(article.getDescription());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //OPEN DETAIL
-                openDetailActivity(s.getTitre(),s.getDescription());
+                openDetailActivity(article.getTitre(), article.getDescription());
             }
         });
         View finalConvertView = convertView;
@@ -85,17 +84,18 @@ public class CustomAdapter extends BaseAdapter {
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0){
-                            ref= FirebaseDatabase.getInstance().getReference(USERS).child("Articles");
-                            ref.equalTo(String.valueOf(articless)).addListenerForSingleValueEvent(
+                        if (which == 0) {
+                            databaseRef.child(CHILD_ARTICLES).addListenerForSingleValueEvent(
                                     new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()){
-                                                for (DataSnapshot data : snapshot.getChildren()){
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot data : snapshot.getChildren()) {
                                                     String key = data.getKey();
-                                                    ref.child(key).setValue(null);
-                                                    Toast.makeText(c.getApplicationContext(), "article supprimer",Toast.LENGTH_LONG).show();
+                                                    if (article.getUid().equals(key)) {
+                                                        data.getRef().removeValue();
+                                                        Toast.makeText(c.getApplicationContext(), "article supprimer", Toast.LENGTH_LONG).show();
+                                                    }
                                                 }
                                             }
                                         }
@@ -120,18 +120,15 @@ public class CustomAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void openDetailActivity(String...details)
-    {
-        Intent i=new Intent(c,DetailActivity.class);
-        i.putExtra("NAME_KEY",details[0]);
-        i.putExtra("DESC_KEY",details[1]);
+    private void openDetailActivity(String... details) {
+        Intent i = new Intent(c, DetailActivity.class);
+        i.putExtra("NAME_KEY", details[0]);
+        i.putExtra("DESC_KEY", details[1]);
 
 
         c.startActivity(i);
     }
     //OPEN DETAIL ACTIVITY
-
-
 
 
 }

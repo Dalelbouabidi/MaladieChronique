@@ -9,6 +9,7 @@ public class Constant {
     public static final String CHILD_RENDEZVOUS = "RENDEZVOUS";
     public static final String CHILD_TYPE_MALADY = "TYPE_MALADY";
     public static final String CHILD_CALENDAR = "CALENDAR";
+    public static final String CHILD_ARTICLES = "ARTICLES";
 
     public static final String MED_NOM = "medicName";
     public static final String MED_QUANTITY = "medicQuantity";
@@ -16,6 +17,9 @@ public class Constant {
     public static final String RENDEZVOUS = "rendezvous";
     public static final String NAME_MALADY = "nameMalady";
     public static final String NAME_DOCTOR = "nameDoctor";
+
+    public static final String ARTICLE_NAME = "titre";
+    public static final String ARTICLE_DESC = "description";
 
 
     public static final String CALENDAR_TREATMENT_NAME = "treatmentName";
