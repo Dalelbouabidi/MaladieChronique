@@ -46,7 +46,7 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
 
         final Analyse analyse = data.get(position);
         holder.analyseNom.setText(analyse.getAnalyse());
-        holder.mal2.setText(analyse.getMaladie());
+        holder.mal2.setText(analyse.getMalade());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

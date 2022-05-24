@@ -1,5 +1,6 @@
 package com.example.health;
 
+import static com.example.health.Constant.CHILD_ARTICLES;
 import static com.example.health.Constant.DATA;
 import static com.example.health.Constant.USERS;
 
@@ -17,7 +18,6 @@ public class FirebaseUtils {
 
     static public DatabaseReference getUsersReference() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser currentUser = getCurrentUser();
         return firebaseDatabase.getReference(USERS);
     }
 
@@ -26,9 +26,15 @@ public class FirebaseUtils {
         FirebaseUser currentUser = getCurrentUser();
         return firebaseDatabase.getReference(USERS).child(currentUser.getUid());
     }
+
     static public DatabaseReference getDataReference() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = getCurrentUser();
         return firebaseDatabase.getReference(DATA).child(currentUser.getUid());
+    }
+
+    static public DatabaseReference getDataArticlesReference() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        return firebaseDatabase.getReference(DATA).child(CHILD_ARTICLES);
     }
 }

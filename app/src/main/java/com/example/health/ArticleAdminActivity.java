@@ -1,7 +1,6 @@
 package com.example.health;
 
-import static com.example.health.Constant.CHILD_ARTICLES;
-import static com.example.health.FirebaseUtils.getDataReference;
+import static com.example.health.FirebaseUtils.getDataArticlesReference;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -27,10 +26,8 @@ import java.util.ArrayList;
 
 public class ArticleAdminActivity extends AppCompatActivity {
 
-    DatabaseReference databaseRef = getDataReference().child(CHILD_ARTICLES);
+    DatabaseReference databaseRef = getDataArticlesReference();
     ArrayList<Articles> articless = new ArrayList<>();
-
-    FirebaseHelper helper;
     CustomAdapter adapter;
     ListView lv;
     EditText nameEditTxt, descTxt;
@@ -43,7 +40,6 @@ public class ArticleAdminActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         lv = findViewById(R.id.lv);
-        helper = new FirebaseHelper();
         adapter = new CustomAdapter(this, articless);
         lv.setAdapter(adapter);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -59,12 +55,12 @@ public class ArticleAdminActivity extends AppCompatActivity {
     }
 
     private void displayInputDialog() {
-        Dialog d = new Dialog(this);
-        d.setTitle("Save To Firebase");
-        d.setContentView(R.layout.input_dialog);
-        nameEditTxt = d.findViewById(R.id.nameEditText);
-        descTxt = d.findViewById(R.id.descEditText);
-        Button saveBtn = d.findViewById(R.id.saveBtn);
+        Dialog dialog = new Dialog(this);
+        dialog.setTitle("Save To Firebase");
+        dialog.setContentView(R.layout.input_dialog);
+        nameEditTxt = dialog.findViewById(R.id.nameEditText);
+        descTxt = dialog.findViewById(R.id.descEditText);
+        Button saveBtn = dialog.findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,20 +73,22 @@ public class ArticleAdminActivity extends AppCompatActivity {
                 s.setDescription(desc);
                 if (name.length() > 0) {
                     //THEN SAVE
-                    if (helper.save(s)) {
-                        //IF SAVED CLEAR EDITXT
-                        nameEditTxt.setText("");
-                        descTxt.setText("");
+                    databaseRef.push().setValue(s);
+                    //IF SAVED CLEAR EDITXT
+                    nameEditTxt.setText("");
+                    descTxt.setText("");
 
-                        adapter = new CustomAdapter(ArticleAdminActivity.this, articless);
-                        lv.setAdapter(adapter);
-                    }
+                    adapter = new CustomAdapter(ArticleAdminActivity.this, articless);
+                    lv.setAdapter(adapter);
+
                 } else {
                     Toast.makeText(ArticleAdminActivity.this, "le champ ne peut pas etre vide", Toast.LENGTH_SHORT).show();
                 }
+
+                dialog.dismiss();
             }
         });
-        d.show();
+        dialog.show();
     }
 
 

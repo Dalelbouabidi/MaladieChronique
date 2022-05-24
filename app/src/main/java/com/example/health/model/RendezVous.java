@@ -2,14 +2,14 @@ package com.example.health.model;
 
 public class RendezVous {
         private String rendezvous;
-    private String maladie;
+    private String malade;
 
     public RendezVous() {
     }
 
     public RendezVous(String rendezvous, String maladie) {
         this.rendezvous = rendezvous;
-        this.maladie = maladie;
+        this.malade = maladie;
     }
 
     public String getRendezvous() {
@@ -20,12 +20,12 @@ public class RendezVous {
         this.rendezvous = rendezvous;
     }
 
-    public String getMaladie() {
-        return maladie;
+    public String getMalade() {
+        return malade;
     }
 
-    public void setMaladie(String maladie) {
-        this.maladie = maladie;
+    public void setMalade(String malade) {
+        this.malade = malade;
     }
 }
 

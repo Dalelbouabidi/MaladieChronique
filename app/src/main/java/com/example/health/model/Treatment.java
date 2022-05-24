@@ -3,14 +3,14 @@ package com.example.health.model;
 public class Treatment {
     private String medicName;
     private String medicQuantity;
-    private String maladie;
+    private String malade;
 
     public Treatment() { }
 
-    public Treatment(String medName, String medQuantity, String maladie) {
+    public Treatment(String medName, String medQuantity, String malade) {
         medicName = medName;
         medicQuantity = medQuantity;
-        this.maladie = maladie;
+        this.malade = malade;
     }
 
     public String getMedicName() {
@@ -29,11 +29,11 @@ public class Treatment {
         this.medicQuantity = medicQuantity;
     }
 
-    public String getMaladie() {
-        return maladie;
+    public String getMalade() {
+        return malade;
     }
 
-    public void setMaladie(String maladie) {
-        this.maladie = maladie;
+    public void setMalade(String maladie) {
+        this.malade = maladie;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.health.ui.article;
 
-import static com.example.health.Constant.CHILD_ARTICLES;
-import static com.example.health.Constant.USERS;
+import static com.example.health.FirebaseUtils.getDataArticlesReference;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.health.ui.BaseActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import java.util.Set;
 
 public class ArticleActivity extends BaseActivity {
     RecyclerView recyclerView;
-    DatabaseReference db;
+    DatabaseReference databaseRef;
     AdapterMain adapter;
     Set<Articles> list = new LinkedHashSet<>();
 
@@ -39,8 +37,9 @@ public class ArticleActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AdapterMain(this, new ArrayList<>(list));
         recyclerView.setAdapter(adapter);
-        db = FirebaseDatabase.getInstance().getReference(USERS).child(CHILD_ARTICLES).child("ARTICLE");
-        db.addValueEventListener(new ValueEventListener() {
+
+        databaseRef = getDataArticlesReference();
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list = new LinkedHashSet<>();

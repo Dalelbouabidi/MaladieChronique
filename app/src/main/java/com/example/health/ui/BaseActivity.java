@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.health.AdminActivity;
 import com.example.health.ui.article.ArticleActivity;
 import com.example.health.ui.calendar.CalendarActivity;
 import com.example.health.ui.malady.TypeMaladyActivity;

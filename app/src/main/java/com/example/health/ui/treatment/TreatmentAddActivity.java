@@ -12,7 +12,6 @@ import static com.example.health.Constant.RENDEZVOUS;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.example.health.FirebaseUtils;
 import com.example.health.R;
@@ -54,9 +52,7 @@ public class TreatmentAddActivity extends BaseActivity {
     private Button btnAddAnalyse;
     private Button btnAddRendez;
     private Button btnSave;
-    Spinner spinner0;
     ArrayList<String> list = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
 
     private final List<String> nombreList = new ArrayList<>();
 
@@ -66,15 +62,18 @@ public class TreatmentAddActivity extends BaseActivity {
     private DatabaseReference databaseReference;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_traitement);
-        fetchData();
+
+        databaseReference = FirebaseUtils.getDataReference();
+
         initView();
 
         initEvent();
+
+        fetchData();
     }
 
     private void initView() {
@@ -82,7 +81,6 @@ public class TreatmentAddActivity extends BaseActivity {
         layoutlistMed = findViewById(R.id.layout_list_med);
         layoutlistAnalyse = findViewById(R.id.layout_list_analyse);
         layoutlistRendez = findViewById(R.id.layout_list_rendez);
-        spinner0 = findViewById(R.id.spinner0);
         btnAddMed = findViewById(R.id.btn_add_med);
         btnAddAnalyse = findViewById(R.id.btn_add_analyse);
         btnAddRendez = findViewById(R.id.btn_add_rendez);
@@ -94,7 +92,7 @@ public class TreatmentAddActivity extends BaseActivity {
         nombreList.add("2");
         nombreList.add("3");
 
-        databaseReference = FirebaseUtils.getDataReference();
+/*
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spinner0.setAdapter(adapter);
         spinner0.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,7 +107,7 @@ public class TreatmentAddActivity extends BaseActivity {
 
             }
         });
-
+*/
 
     }
 
@@ -118,15 +116,12 @@ public class TreatmentAddActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
-                        TypeMalady typeMalady = snapshot2.getValue(TypeMalady.class);
-                        if (typeMalady != null) {
-                            list.add(typeMalady.getNameMalady());
-
-                        }
+                    TypeMalady typeMalady = snapshot1.getValue(TypeMalady.class);
+                    if (typeMalady != null) {
+                        list.add(typeMalady.getNameMalady());
                     }
                 }
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -148,13 +143,13 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistMed.getChildCount(); i++) {
                 View item = layoutlistMed.getChildAt(i);
                 EditText medicNom = item.findViewById(R.id.medic_nom);
-                AppCompatSpinner spinner = item.findViewById(R.id.spinner);
-                String malady = spinner0.getSelectedItem().toString();
-
+                Spinner medicQuantity = item.findViewById(R.id.medic_quantity);
+                Spinner spinner = item.findViewById(R.id.medic_malady);
+                String malady = spinner.getSelectedItem().toString();
                 Map<String, String> treatment = new HashMap<>();
                 treatment.put(MED_NOM, medicNom.getText().toString());
                 treatment.put(MALADE, malady);
-                treatment.put(MED_QUANTITY, nombreList.get(spinner.getSelectedItemPosition()));
+                treatment.put(MED_QUANTITY, nombreList.get(medicQuantity.getSelectedItemPosition()));
                 treatments.add(treatment);
             }
             // analyses
@@ -162,21 +157,20 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistAnalyse.getChildCount(); i++) {
                 View item = layoutlistAnalyse.getChildAt(i);
                 EditText analyseNom = item.findViewById(R.id.analyse_nom);
-                String malady = spinner0.getSelectedItem().toString();
-
-
+                Spinner spinner = item.findViewById(R.id.rendez_malady);
+                String malady = spinner.getSelectedItem().toString();
                 Map<String, String> analyse = new HashMap<>();
                 analyse.put(ANALYSES, analyseNom.getText().toString());
                 analyse.put(MALADE, malady);
                 analyses.add(analyse);
             }
             //rendez
-            List<Map<String, String>> rendezv =new ArrayList<Map<String, String>>();
+            List<Map<String, String>> rendezv = new ArrayList<Map<String, String>>();
             for (int i = 0; i < layoutlistRendez.getChildCount(); i++) {
                 View item = layoutlistRendez.getChildAt(i);
                 EditText rendezNom = item.findViewById(R.id.rendez_nom);
-                String malady = spinner0.getSelectedItem().toString();
-
+                Spinner spinner = item.findViewById(R.id.analyse_malady);
+                String malady = spinner.getSelectedItem().toString();
 
                 Map<String, String> rendezvous = new HashMap<>();
                 rendezvous.put(RENDEZVOUS, rendezNom.getText().toString());
@@ -184,16 +178,16 @@ public class TreatmentAddActivity extends BaseActivity {
                 rendezv.add(rendezvous);
             }
 
-            addDataToFirebase(treatments, analyses,rendezv);
+            addDataToFirebase(treatments, analyses, rendezv);
 
         });
     }
 
     private void addAnalyse() {
         View analyseView = getLayoutInflater().inflate(R.layout.row_ajouter_analyse, null, false);
-        spinner0 = analyseView.findViewById(R.id.spinner0);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        spinner0.setAdapter(adapter);
+        Spinner spinner = analyseView.findViewById(R.id.analyse_malady);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
         ImageView imageClose = analyseView.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,11 +197,12 @@ public class TreatmentAddActivity extends BaseActivity {
         });
         layoutlistAnalyse.addView(analyseView);
     }
+
     private void addRendez() {
         View rendezView = getLayoutInflater().inflate(R.layout.row_ajouter_rendez, null, false);
-        spinner0 = rendezView.findViewById(R.id.spinner0);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        spinner0.setAdapter(adapter);
+        Spinner spinner = rendezView.findViewById(R.id.rendez_malady);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
         ImageView imageClose = rendezView.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,11 +213,28 @@ public class TreatmentAddActivity extends BaseActivity {
         layoutlistRendez.addView(rendezView);
     }
 
+    private void addMedication() {
+        View medicamentView = getLayoutInflater().inflate(R.layout.row_ajouter_medicament, null, false);
+        Spinner medicQuantity = medicamentView.findViewById(R.id.medic_quantity);
+        Spinner spinner = medicamentView.findViewById(R.id.medic_malady);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, nombreList);
+        medicQuantity.setAdapter(arrayAdapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner.setAdapter(adapter);
+
+        ImageView imageClose = medicamentView.findViewById(R.id.immage_remove);
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeViewMed(medicamentView);
+            }
+        });
+        layoutlistMed.addView(medicamentView);
+    }
 
     private void removeViewAnalyse(View view) {
         layoutlistAnalyse.removeView(view);
     }
-
 
     private void removeAllViewAnalyse() {
         layoutlistAnalyse.removeAllViews();
@@ -237,24 +249,6 @@ public class TreatmentAddActivity extends BaseActivity {
         layoutlistRendez.removeAllViews();
     }
 
-    private void addMedication() {
-        View medicamentView = getLayoutInflater().inflate(R.layout.row_ajouter_medicament, null, false);
-        AppCompatSpinner spinner = medicamentView.findViewById(R.id.spinner);
-        spinner0 = medicamentView.findViewById(R.id.spinner0);
-        ImageView imageClose = medicamentView.findViewById(R.id.immage_remove);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, nombreList);
-        spinner.setAdapter(arrayAdapter);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
-        spinner0.setAdapter(adapter);
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeViewMed(medicamentView);
-            }
-        });
-        layoutlistMed.addView(medicamentView);
-    }
-
     private void removeViewMed(View view) {
         layoutlistMed.removeView(view);
     }
@@ -263,7 +257,7 @@ public class TreatmentAddActivity extends BaseActivity {
         layoutlistMed.removeAllViews();
     }
 
-    private void addDataToFirebase(List<Map<String, String>> treatments, List<Map<String, String>> analyses ,List<Map<String, String>> rendezv) {
+    private void addDataToFirebase(List<Map<String, String>> treatments, List<Map<String, String>> analyses, List<Map<String, String>> rendezv) {
 
         DatabaseReference databaseRef = FirebaseUtils.getDataReference();
         databaseRef.child(CHILD_TREATMENTS).push().setValue(treatments).addOnCompleteListener(new OnCompleteListener<Void>() {

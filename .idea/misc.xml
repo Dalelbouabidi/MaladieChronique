@@ -127,6 +127,7 @@
         <entry key="app/src/main/res/layout/activity_admin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ajouter_traitement.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/layout/activity_article.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_article_admin.xml" value="0.370018115942029" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.12760416666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_maladie.xml" value="0.37604166666666666" />
@@ -136,7 +137,9 @@
         <entry key="app/src/main/res/layout/activity_traitement_medicale_edit.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_treatment.xml" value="0.33933518005540164" />
         <entry key="app/src/main/res/layout/activity_type.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_type_malady.xml" value="0.370018115942029" />
         <entry key="app/src/main/res/layout/calendar_cell.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/input_dialog.xml" value="0.370018115942029" />
         <entry key="app/src/main/res/layout/item.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/layout_navigation_header.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/list_maladie.xml" value="0.37604166666666666" />

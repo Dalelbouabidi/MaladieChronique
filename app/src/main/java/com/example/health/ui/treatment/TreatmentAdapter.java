@@ -49,7 +49,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
         final Treatment treatment = data.get(position);
         holder.medNom.setText(treatment.getMedicName());
         holder.medQuantity.setText(treatment.getMedicQuantity());
-        holder.mal.setText(treatment.getMaladie());
+        holder.medMalady.setText(treatment.getMalade());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,13 +105,13 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
 
         public final TextView medNom;
         public final TextView medQuantity;
-        public final TextView mal;
+        public final TextView medMalady;
 
         public TreatmentViewHolder(@NonNull View itemView) {
             super(itemView);
             medNom = itemView.findViewById(R.id.medic_nom);
             medQuantity = itemView.findViewById(R.id.medic_quantity);
-            mal = itemView.findViewById(R.id.mal);
+            medMalady = itemView.findViewById(R.id.medic_malady);
         }
     }
 

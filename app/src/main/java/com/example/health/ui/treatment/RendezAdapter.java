@@ -46,7 +46,7 @@ public class RendezAdapter extends RecyclerView.Adapter<RendezAdapter.TreatmentV
 
         final RendezVous rendezvous = data.get(position);
         holder.rendezNom.setText(rendezvous.getRendezvous());
-        holder.mal1.setText(rendezvous.getMaladie());
+        holder.mal1.setText(rendezvous.getMalade());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

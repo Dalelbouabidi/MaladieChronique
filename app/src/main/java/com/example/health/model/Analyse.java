@@ -2,13 +2,13 @@ package com.example.health.model;
 
 public class Analyse {
     private String analyse;
-    private String maladie;
+    private String malade;
 
     public Analyse(){ }
 
-    public Analyse(String analyse, String maladie) {
+    public Analyse(String analyse, String malade) {
         this.analyse = analyse;
-        this.maladie = maladie;
+        this.malade = malade;
     }
 
     public String getAnalyse() {
@@ -19,11 +19,11 @@ public class Analyse {
         this.analyse = analyse;
     }
 
-    public String getMaladie() {
-        return maladie;
+    public String getMalade() {
+        return malade;
     }
 
-    public void setMaladie(String maladie) {
-        this.maladie = maladie;
+    public void setMalade(String malade) {
+        this.malade = malade;
     }
 }

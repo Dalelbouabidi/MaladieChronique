@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -28,14 +27,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddTypeMaladyActivity extends BaseActivity {
-    String[] maladie = {"Diabète", "Dysthyroidies", "Affections hypophysaires","Affections surrénaliennes",
-            "HTA sévère", "Cardiopathies congénitales et valvulopathies","Sclérose en plaques",
+    String[] maladie = {"Diabète", "Dysthyroidies", "Affections hypophysaires", "Affections surrénaliennes",
+            "HTA sévère", "Cardiopathies congénitales et valvulopathies", "Sclérose en plaques",
             "Affections coronariennes et leurs complications", "Phlébites", "Tuberculose active",
-            "Insuffisance respiratoire chronique","Insuffisance cardiaque et troubles du rythme" ,
+            "Insuffisance respiratoire chronique", "Insuffisance cardiaque et troubles du rythme",
             "Epilepise", "Maladie de Parkinson", "Psychoses et névroses", "Insuffisance rénale chronique"
             , "Rhumatismes inflamatoires chronique", "Maladies auto-immunes",
             "Tumeurs et hémopathies malignes", "Maladies inflamatoires de l'intestin",
@@ -48,6 +49,7 @@ public class AddTypeMaladyActivity extends BaseActivity {
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterMaladie;
     private DatabaseReference databaseRef;
+    List<TypeMalady> myMaladyList = new ArrayList<>();
 
 
     @Override
@@ -58,18 +60,11 @@ public class AddTypeMaladyActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         NomMedecin = findViewById(R.id.NomMedecin);
         ajouter = findViewById(R.id.ajouterbtn);
-        autoCompleteTextView=findViewById(R.id.NomMaladie);
-        adapterMaladie = new ArrayAdapter<String>(this,R.layout.list_item,maladie);
+        autoCompleteTextView = findViewById(R.id.NomMaladie);
+        adapterMaladie = new ArrayAdapter<String>(this, R.layout.list_item, maladie);
         autoCompleteTextView.setAdapter(adapterMaladie);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent , View view, int position, long id) {
-                String maladie  = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),"Maladie: "+maladie,Toast.LENGTH_LONG).show();
-            }
-        });
 
-
+        initData();
 
         ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,38 +76,43 @@ public class AddTypeMaladyActivity extends BaseActivity {
                 }
                 if (TextUtils.isEmpty(nomMed)) {
                     NomMedecin.setError("Svp entrez votre nom de medecin");
+                } else if (!CheckValue(nomMalady)) {
+                    addDataToDatabase(nomMalady, nomMed);
+                    Intent i = new Intent(AddTypeMaladyActivity.this, TypeMaladyActivity.class);
+                    startActivity(i);
+                    finish();
                 } else {
-
-                    if (CheckValue(nomMalady)) {
-                        addDataToDatabase(nomMalady, nomMed);
-                        Intent i = new Intent(AddTypeMaladyActivity.this, TypeMaladyActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Maladie deja Registrer", Toast.LENGTH_SHORT).show();
-                    }
-
+                    Toast.makeText(getApplicationContext(), "Maladie deja Registrer", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private boolean CheckValue(String nomMalady) {
+    private void initData() {
+
         databaseRef.child(CHILD_TYPE_MALADY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapst : snapshot.getChildren()) {
-                    TypeMalady typeMalady = snapst.getValue(TypeMalady.class);
-                    verif = !typeMalady.getNameMalady().equals(nomMalady);
+                myMaladyList = new ArrayList<>();
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    TypeMalady typeMalady = childSnapshot.getValue(TypeMalady.class);
+                    myMaladyList.add(typeMalady);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-        return verif;
+    }
+
+    private boolean CheckValue(String nomMalady) {
+        for (TypeMalady typeMalady : myMaladyList) {
+            if (typeMalady.getNameMalady().equals(nomMalady)) {
+                return true;
+            }
+        }
+        return false;
 
     }
 
