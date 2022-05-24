@@ -1,3 +1,4 @@
+
 package com.example.health.ui.article;
 
 import android.content.Context;
@@ -46,14 +47,12 @@ public class AdapterMain extends RecyclerView.Adapter<AdapterMain.MyViewHolder>{
     }
 
     private void openDetailActivity(String...details) {
+        Intent i = new Intent(context, detail.class);
+        i.putExtra("NAME_KEY", details[0]);
+        i.putExtra("DESC_KEY", details[1]);
 
-            Intent i=new Intent(context, detail.class);
-            i.putExtra("NAME_KEY",details[0]);
-            i.putExtra("DESC_KEY",details[1]);
-
-
-            context.startActivity(i);
-        }
+        context.startActivity(i);
+    }
 
 
     @Override
@@ -68,7 +67,6 @@ public class AdapterMain extends RecyclerView.Adapter<AdapterMain.MyViewHolder>{
             super(itemView);
             nameTxt = itemView.findViewById(R.id.nameTxt);
             descTxt = itemView.findViewById(R.id.descTxt);
-
 
         }
     }

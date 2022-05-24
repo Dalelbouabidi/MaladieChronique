@@ -13,6 +13,7 @@ public class Constant {
 
     public static final String MED_NOM = "medicName";
     public static final String MED_QUANTITY = "medicQuantity";
+    public static final String MALADE = "malade";
     public static final String ANALYSES = "analyse";
     public static final String RENDEZVOUS = "rendezvous";
     public static final String NAME_MALADY = "nameMalady";

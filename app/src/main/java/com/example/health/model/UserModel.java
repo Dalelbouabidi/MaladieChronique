@@ -1,7 +1,7 @@
 package com.example.health.model;
 
 public class UserModel {
-    private String userId, nomdutilisateur, datedenaissance, telephone,usertype;
+    private String userId, nomdutilisateur, datedenaissance, telephone, email, motdepasse, usertype;
 
     public UserModel() {
 
@@ -13,6 +13,8 @@ public class UserModel {
         this.datedenaissance = datedenaissance;
         this.telephone = telephone;
         this.usertype = usertype;
+        this.email = email;
+        this.motdepasse = motdepasse;
     }
 
     @Override
@@ -69,5 +71,20 @@ public class UserModel {
     public void setUsertype(String usertype) {
         this.usertype = usertype;
     }
-}
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMotdepasse() {
+        return motdepasse;
+    }
+
+    public void setMotdepasse(String motdepasse) {
+        this.motdepasse = motdepasse;
+    }
+}

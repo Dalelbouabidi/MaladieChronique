@@ -53,7 +53,9 @@ public class ProfileActivity extends BaseActivity {
                     nom.setText(userModel.getNomdutilisateur());
                     date.setText(userModel.getDatedenaissance());
                     phone.setText(userModel.getTelephone());
-                    mail.setText(firebaseUser.getEmail());
+                    mail.setText(userModel.getEmail());
+                    mot_passe.setText(userModel.getMotdepasse());
+
                 }
             }
 
@@ -74,5 +76,4 @@ public class ProfileActivity extends BaseActivity {
         recreate();
     }
 }
-
 

@@ -1,10 +1,8 @@
 package com.example.health.ui.treatment;
 
 import static com.example.health.Constant.CHILD_TREATMENTS;
-import static com.example.health.Constant.MED_NOM;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,12 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.TreatmentViewHolder> {
-    private static String TAG = TreatmentAdapter.class.getSimpleName();
-    private ArrayList<Treatment> data = new ArrayList<>();
-    public TreatmentAdapter(List<Treatment> data){
+    private static final String TAG = TreatmentAdapter.class.getSimpleName();
+    private final ArrayList<Treatment> data = new ArrayList<>();
+
+    public TreatmentAdapter(List<Treatment> data) {
         this.data.clear();
         this.data.addAll(data);
     }
+
     @NonNull
     @Override
     public TreatmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,10 +49,11 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
         final Treatment treatment = data.get(position);
         holder.medNom.setText(treatment.getMedicName());
         holder.medQuantity.setText(treatment.getMedicQuantity());
+        holder.mal.setText(treatment.getMaladie());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CharSequence options[] = new CharSequence[]{
+                CharSequence[] options = new CharSequence[]{
                         "Effacer",
                         "Anunuler",
                 };
@@ -77,7 +78,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d(TAG, "onDataChange : snapshot = " + snapshot.toString());
+                Log.d(TAG, "onDataChange : snapshot = " + snapshot);
                 for (DataSnapshot snapshot1: snapshot.getChildren()) {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         Treatment treatment = snapshot2.getValue(Treatment.class);
@@ -104,11 +105,13 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
 
         public final TextView medNom;
         public final TextView medQuantity;
+        public final TextView mal;
 
         public TreatmentViewHolder(@NonNull View itemView) {
             super(itemView);
             medNom = itemView.findViewById(R.id.medic_nom);
             medQuantity = itemView.findViewById(R.id.medic_quantity);
+            mal = itemView.findViewById(R.id.mal);
         }
     }
 

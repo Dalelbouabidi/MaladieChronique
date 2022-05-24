@@ -3,7 +3,6 @@ package com.example.health.ui.malady;
 import static com.example.health.Constant.CHILD_TYPE_MALADY;
 import static com.example.health.Constant.NAME_DOCTOR;
 import static com.example.health.Constant.NAME_MALADY;
-import static com.example.health.Constant.USERS;
 import static com.example.health.FirebaseUtils.getDataReference;
 
 import android.content.Intent;
@@ -20,13 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.health.R;
+import com.example.health.model.TypeMalady;
 import com.example.health.ui.BaseActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +42,7 @@ public class AddTypeMaladyActivity extends BaseActivity {
             "Hepatites chroniques actives"};
 
 
+    Boolean verif = false;
     EditText NomMedecin;
     Button ajouter;
     AutoCompleteTextView autoCompleteTextView;
@@ -81,14 +82,40 @@ public class AddTypeMaladyActivity extends BaseActivity {
                 if (TextUtils.isEmpty(nomMed)) {
                     NomMedecin.setError("Svp entrez votre nom de medecin");
                 } else {
-                    addDataToDatabase(nomMalady, nomMed);
-                    Intent i = new Intent(AddTypeMaladyActivity.this, TypeMaladyActivity.class);
-                    startActivity(i);
-                    finish();
+
+                    if (CheckValue(nomMalady)) {
+                        addDataToDatabase(nomMalady, nomMed);
+                        Intent i = new Intent(AddTypeMaladyActivity.this, TypeMaladyActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Maladie deja Registrer", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
     }
+
+    private boolean CheckValue(String nomMalady) {
+        databaseRef.child(CHILD_TYPE_MALADY).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapst : snapshot.getChildren()) {
+                    TypeMalady typeMalady = snapst.getValue(TypeMalady.class);
+                    verif = !typeMalady.getNameMalady().equals(nomMalady);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return verif;
+
+    }
+
 
     private void addDataToDatabase(String nameMalady, String nameMed) {
         Map<String, Object> hashMap = new HashMap<>();

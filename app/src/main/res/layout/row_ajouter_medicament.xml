@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/medic_nom"
-        android:layout_marginLeft="10dp"
+
         android:layout_marginRight="5dp"
         android:background="@drawable/round_grey"
         android:layout_weight="1"
@@ -26,18 +26,23 @@
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="40dp"></androidx.appcompat.widget.AppCompatSpinner>
 
 
     </FrameLayout>
 
+    <Spinner
+        android:id="@+id/spinner0"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:background="#562196F3" />
+
+
     <ImageView
         android:id="@+id/immage_remove"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="5dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_close"
         app:tint="@color/black" />

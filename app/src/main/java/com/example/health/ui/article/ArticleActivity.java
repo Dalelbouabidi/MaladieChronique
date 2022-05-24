@@ -1,5 +1,6 @@
 package com.example.health.ui.article;
 
+import static com.example.health.Constant.CHILD_ARTICLES;
 import static com.example.health.Constant.USERS;
 
 import android.os.Bundle;
@@ -19,13 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ArticleActivity extends BaseActivity {
     RecyclerView recyclerView;
     DatabaseReference db;
     AdapterMain adapter;
-    ArrayList<Articles> list;
-
+    Set<Articles> list = new LinkedHashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +37,21 @@ public class ArticleActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.lv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<>();
-        adapter = new AdapterMain(this, list);
+        adapter = new AdapterMain(this, new ArrayList<>(list));
         recyclerView.setAdapter(adapter);
-        db = FirebaseDatabase.getInstance().getReference(USERS).child("Articles");
+        db = FirebaseDatabase.getInstance().getReference(USERS).child(CHILD_ARTICLES).child("ARTICLE");
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list = new LinkedHashSet<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Articles articles = dataSnapshot.getValue(Articles.class);
+
+                    articles.setUid(snapshot.getKey());
                     list.add(articles);
 
                 }
+                adapter.list = new ArrayList<>(list);
                 adapter.notifyDataSetChanged();
             }
 

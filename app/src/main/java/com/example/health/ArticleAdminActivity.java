@@ -86,7 +86,7 @@ public class ArticleAdminActivity extends AppCompatActivity {
                         lv.setAdapter(adapter);
                     }
                 } else {
-                    Toast.makeText(ArticleAdminActivity.this, "Name Must Not Be Empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ArticleAdminActivity.this, "le champ ne peut pas etre vide", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,7 +1,5 @@
 package com.example.health;
 
-import static com.example.health.Constant.USERS;
-import static com.example.health.FirebaseUtils.getUserReference;
 import static com.example.health.FirebaseUtils.getUsersReference;
 
 import android.content.Context;
@@ -19,13 +17,12 @@ import com.example.health.model.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
-    private static String TAG = MainAdapter.class.getSimpleName();
+    private static final String TAG = MainAdapter.class.getSimpleName();
     Context context;
     ArrayList<UserModel> list;
 
@@ -47,33 +44,33 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         holder.nametext.setText(userModel.getNomdutilisateur());
         holder.nametext1.setText(userModel.getDatedenaissance());
         holder.nametext2.setText(userModel.getTelephone());
-       // holder.nametext3.setText(userModel.getEmail());
+        holder.nametext3.setText(userModel.getEmail());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseReference databaseRef = getUsersReference();
                 databaseRef.addListenerForSingleValueEvent(
-                      new ValueEventListener() {
-                          @Override
-                          public void onDataChange(@NonNull DataSnapshot snapshot) {
-                              if (snapshot.exists()){
-                                  for (DataSnapshot data : snapshot.getChildren()){
-                                      String key = data.getKey();
-                                      if(userModel.getUserId().equals(key)) {
-                                          data.getRef().removeValue();
-                                          Toast.makeText(context.getApplicationContext(), "Patient supprimer", Toast.LENGTH_LONG).show();
-                                      }
-                                  }
-                              }
-                          }
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    for (DataSnapshot data : snapshot.getChildren()) {
+                                        String key = data.getKey();
+                                        if (userModel.getUserId().equals(key)) {
+                                            data.getRef().removeValue();
+                                            Toast.makeText(context.getApplicationContext(), "Patient supprimer", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+                            }
 
-                          @Override
-                          public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                          }
+                            }
 
-                      });
+                        });
             }
         });
 
@@ -98,7 +95,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             nametext1 = itemView.findViewById(R.id.nametext1);
             nametext2 = itemView.findViewById(R.id.nametext2);
             nametext3 = itemView.findViewById(R.id.nametext3);
-           delete = itemView.findViewById(R.id.btndelete);
+            delete = itemView.findViewById(R.id.btndelete);
 
         }
     }

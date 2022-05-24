@@ -1,3 +1,4 @@
+
 package com.example.health.ui.calendar;
 
 import static com.example.health.Constant.CHILD_CALENDAR;
@@ -5,11 +6,8 @@ import static com.example.health.Constant.USERS;
 import static com.example.health.ui.calendar.CalendarUtils.daysInWeekArray;
 import static com.example.health.ui.calendar.CalendarUtils.monthYearFromDate;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import androidx.core.util.Pair;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.TreatmentMedical;
 import com.example.health.ui.BaseActivity;
@@ -29,7 +26,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
@@ -122,27 +118,8 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
         List<TreatmentMedical> localTreatmentMedicalList = TreatmentMedical.getTreatmentMedicalByDate(treatmentMedicalList, CalendarUtils.choisirDate);
         TreatmentMedicalAdapter treatmentMedicalAdapter = new TreatmentMedicalAdapter(this, localTreatmentMedicalList);
         traitementMedicalListView.setAdapter(treatmentMedicalAdapter);
-        traitementMedicalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CharSequence[] options = new CharSequence[]{
-                        "Effacer",
-                        "Annuler",
-                };
-                AlertDialog.Builder builder = new AlertDialog.Builder(traitementMedicalListView.getContext());
-                builder.setTitle("Effacer");
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0){
-                            delete(traitementMedicalListView);
 
-                        }
-                    }
-                });
-                builder.show();
-            }
-        });
+
 
 
 
@@ -152,28 +129,7 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
 
     }
 
-    private void delete(ListView traitementMedicalListView) {
-        DatabaseReference databaseRef = FirebaseUtils.getDataReference();
-        Query query = databaseRef.child(CHILD_CALENDAR);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1: snapshot.getChildren()) {
-                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
-                        TreatmentMedical treatmentMedical = snapshot2.getValue(TreatmentMedical.class);
-                        if(treatmentMedical != null && treatmentMedical.equals(traitementMedicalListView)) {
-                            snapshot2.getRef().removeValue();
-                        }
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
 
     private void chargerData() {
@@ -183,6 +139,7 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
 
                 for (DataSnapshot children : snapshot.getChildren()) {
                     TreatmentMedical treatmentMedical = children.getValue(TreatmentMedical.class);
+                    treatmentMedical.setCuid(children.getKey());
                     treatmentMedicalList.add(treatmentMedical);
                 }
                 setSemaineView();

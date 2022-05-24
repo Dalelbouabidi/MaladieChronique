@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RendezAdapter extends RecyclerView.Adapter<RendezAdapter.TreatmentViewHolder> {
-    private ArrayList<RendezVous> data = new ArrayList<>();
+    private final ArrayList<RendezVous> data = new ArrayList<>();
     public RendezAdapter(List<RendezVous> data){
         this.data.clear();
         this.data.addAll(data);
@@ -46,6 +46,7 @@ public class RendezAdapter extends RecyclerView.Adapter<RendezAdapter.TreatmentV
 
         final RendezVous rendezvous = data.get(position);
         holder.rendezNom.setText(rendezvous.getRendezvous());
+        holder.mal1.setText(rendezvous.getMaladie());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +75,7 @@ public class RendezAdapter extends RecyclerView.Adapter<RendezAdapter.TreatmentV
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("RendezAdapter", "onDataChange : snapshot = " + snapshot.toString());
+                Log.d("RendezAdapter", "onDataChange : snapshot = " + snapshot);
                 for (DataSnapshot snapshot1: snapshot.getChildren()) {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         RendezVous rendezVous = snapshot2.getValue(RendezVous.class);
@@ -101,10 +102,12 @@ public class RendezAdapter extends RecyclerView.Adapter<RendezAdapter.TreatmentV
     protected static class TreatmentViewHolder extends RecyclerView.ViewHolder{
 
         public final TextView rendezNom;
+        public final TextView mal1;
 
         public TreatmentViewHolder(@NonNull View itemView) {
             super(itemView);
             rendezNom = itemView.findViewById(R.id.rendez_nom);
+            mal1 = itemView.findViewById(R.id.mal1);
         }
     }
 

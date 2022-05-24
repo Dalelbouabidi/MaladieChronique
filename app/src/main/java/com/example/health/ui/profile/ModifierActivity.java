@@ -34,21 +34,21 @@ public class ModifierActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         phone = findViewById(R.id.phone);
         password = findViewById(R.id.mot_passe);
-        save= findViewById(R.id.save);
+        save = findViewById(R.id.save);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference(USERS).child(firebaseUser.getUid());
-       charger();
-       save.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               databaseReference.child("telephone").setValue(phone.getText().toString());
-               databaseReference.child("motdepasse").setValue(password.getText().toString());
-               Toast.makeText(ModifierActivity.this, "les données ont été modifiées", Toast.LENGTH_LONG).show();
-               startActivity(new Intent(ModifierActivity.this,ProfileActivity.class));
-           }
+        charger();
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child("telephone").setValue(phone.getText().toString());
+                databaseReference.child("motdepasse").setValue(password.getText().toString());
+                Toast.makeText(ModifierActivity.this, "les données ont été modifiées", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ModifierActivity.this, ProfileActivity.class));
+            }
 
-       });
+        });
     }
 
     private void charger() {
@@ -58,7 +58,7 @@ public class ModifierActivity extends BaseActivity {
                 UserModel userModel = snapshot.getValue(UserModel.class);
                 if (userModel != null){
                     phone.setText(userModel.getTelephone());
-                   // password.setText(userModel.getMotdepasse());
+                    password.setText(userModel.getMotdepasse());
                 }
             }
 

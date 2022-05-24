@@ -1,6 +1,5 @@
 package com.example.health;
 
-import static com.example.health.FirebaseUtils.getCurrentUser;
 import static com.example.health.FirebaseUtils.getUserReference;
 
 import android.os.Bundle;
@@ -43,7 +42,8 @@ public class HomeAdminActivity extends AppCompatActivity {
                     nom.setText(userModel.getNomdutilisateur());
                     date.setText(userModel.getDatedenaissance());
                     phone.setText(userModel.getTelephone());
-                    mail.setText(getCurrentUser().getEmail());
+                    mail.setText(userModel.getEmail());
+                    mot_passe.setText(userModel.getMotdepasse());
                 }
             }
 

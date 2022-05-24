@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.TreatmentViewHolder> {
-    private ArrayList<Analyse> data = new ArrayList<>();
+    private final ArrayList<Analyse> data = new ArrayList<>();
     public AnalyseAdapter(List<Analyse> data){
         this.data.clear();
         this.data.addAll(data);
@@ -46,6 +46,7 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
 
         final Analyse analyse = data.get(position);
         holder.analyseNom.setText(analyse.getAnalyse());
+        holder.mal2.setText(analyse.getMaladie());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +75,7 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("AnalyseAdapter", "onDataChange : snapshot = " + snapshot.toString());
+                Log.d("AnalyseAdapter", "onDataChange : snapshot = " + snapshot);
                 for (DataSnapshot snapshot1: snapshot.getChildren()) {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         Analyse analyse = snapshot2.getValue(Analyse.class);
@@ -102,11 +103,13 @@ public class AnalyseAdapter extends RecyclerView.Adapter<AnalyseAdapter.Treatmen
     protected static class TreatmentViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView analyseNom;
-        private RecyclerView rvAnalyses;
+        public final TextView mal2;
+        private final RecyclerView rvAnalyses;
 
         public TreatmentViewHolder(@NonNull View itemView) {
             super(itemView);
             analyseNom = itemView.findViewById(R.id.analyse_nom);
+            mal2 = itemView.findViewById(R.id.mal2);
             rvAnalyses = itemView.findViewById(R.id.rv_analyses);
         }
     }}

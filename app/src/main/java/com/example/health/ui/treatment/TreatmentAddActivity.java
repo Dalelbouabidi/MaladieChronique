@@ -4,18 +4,21 @@ import static com.example.health.Constant.ANALYSES;
 import static com.example.health.Constant.CHILD_ANALYSES;
 import static com.example.health.Constant.CHILD_RENDEZVOUS;
 import static com.example.health.Constant.CHILD_TREATMENTS;
+import static com.example.health.Constant.CHILD_TYPE_MALADY;
+import static com.example.health.Constant.MALADE;
 import static com.example.health.Constant.MED_NOM;
 import static com.example.health.Constant.MED_QUANTITY;
 import static com.example.health.Constant.RENDEZVOUS;
-import static com.example.health.Constant.USERS;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,14 +26,15 @@ import androidx.appcompat.widget.AppCompatSpinner;
 
 import com.example.health.FirebaseUtils;
 import com.example.health.R;
+import com.example.health.model.TypeMalady;
 import com.example.health.ui.BaseActivity;
 import com.example.health.ui.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,12 +54,16 @@ public class TreatmentAddActivity extends BaseActivity {
     private Button btnAddAnalyse;
     private Button btnAddRendez;
     private Button btnSave;
+    Spinner spinner0;
+    ArrayList<String> list = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
     private final List<String> nombreList = new ArrayList<>();
 
     private boolean isSuccessAddTreatment = false;
     private boolean isSuccessAddAnalyse = false;
     private boolean isSuccessAddRendez = false;
+    private DatabaseReference databaseReference;
 
 
 
@@ -63,7 +71,7 @@ public class TreatmentAddActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajouter_traitement);
-
+        fetchData();
         initView();
 
         initEvent();
@@ -73,8 +81,8 @@ public class TreatmentAddActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         layoutlistMed = findViewById(R.id.layout_list_med);
         layoutlistAnalyse = findViewById(R.id.layout_list_analyse);
-        layoutlistRendez=findViewById(R.id.layout_list_rendez);
-
+        layoutlistRendez = findViewById(R.id.layout_list_rendez);
+        spinner0 = findViewById(R.id.spinner0);
         btnAddMed = findViewById(R.id.btn_add_med);
         btnAddAnalyse = findViewById(R.id.btn_add_analyse);
         btnAddRendez = findViewById(R.id.btn_add_rendez);
@@ -85,6 +93,47 @@ public class TreatmentAddActivity extends BaseActivity {
         nombreList.add("1");
         nombreList.add("2");
         nombreList.add("3");
+
+        databaseReference = FirebaseUtils.getDataReference();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner0.setAdapter(adapter);
+        spinner0.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String mald = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Maladie: " + mald, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+
+    private void fetchData() {
+        databaseReference.child(CHILD_TYPE_MALADY).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        TypeMalady typeMalady = snapshot2.getValue(TypeMalady.class);
+                        if (typeMalady != null) {
+                            list.add(typeMalady.getNameMalady());
+
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(TreatmentAddActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initEvent() {
@@ -100,9 +149,11 @@ public class TreatmentAddActivity extends BaseActivity {
                 View item = layoutlistMed.getChildAt(i);
                 EditText medicNom = item.findViewById(R.id.medic_nom);
                 AppCompatSpinner spinner = item.findViewById(R.id.spinner);
+                String malady = spinner0.getSelectedItem().toString();
 
                 Map<String, String> treatment = new HashMap<>();
                 treatment.put(MED_NOM, medicNom.getText().toString());
+                treatment.put(MALADE, malady);
                 treatment.put(MED_QUANTITY, nombreList.get(spinner.getSelectedItemPosition()));
                 treatments.add(treatment);
             }
@@ -111,9 +162,12 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistAnalyse.getChildCount(); i++) {
                 View item = layoutlistAnalyse.getChildAt(i);
                 EditText analyseNom = item.findViewById(R.id.analyse_nom);
+                String malady = spinner0.getSelectedItem().toString();
+
 
                 Map<String, String> analyse = new HashMap<>();
                 analyse.put(ANALYSES, analyseNom.getText().toString());
+                analyse.put(MALADE, malady);
                 analyses.add(analyse);
             }
             //rendez
@@ -121,9 +175,12 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistRendez.getChildCount(); i++) {
                 View item = layoutlistRendez.getChildAt(i);
                 EditText rendezNom = item.findViewById(R.id.rendez_nom);
+                String malady = spinner0.getSelectedItem().toString();
+
 
                 Map<String, String> rendezvous = new HashMap<>();
                 rendezvous.put(RENDEZVOUS, rendezNom.getText().toString());
+                rendezvous.put(MALADE, malady);
                 rendezv.add(rendezvous);
             }
 
@@ -134,6 +191,9 @@ public class TreatmentAddActivity extends BaseActivity {
 
     private void addAnalyse() {
         View analyseView = getLayoutInflater().inflate(R.layout.row_ajouter_analyse, null, false);
+        spinner0 = analyseView.findViewById(R.id.spinner0);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner0.setAdapter(adapter);
         ImageView imageClose = analyseView.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +205,9 @@ public class TreatmentAddActivity extends BaseActivity {
     }
     private void addRendez() {
         View rendezView = getLayoutInflater().inflate(R.layout.row_ajouter_rendez, null, false);
+        spinner0 = rendezView.findViewById(R.id.spinner0);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner0.setAdapter(adapter);
         ImageView imageClose = rendezView.findViewById(R.id.image_remove);
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,9 +240,12 @@ public class TreatmentAddActivity extends BaseActivity {
     private void addMedication() {
         View medicamentView = getLayoutInflater().inflate(R.layout.row_ajouter_medicament, null, false);
         AppCompatSpinner spinner = medicamentView.findViewById(R.id.spinner);
+        spinner0 = medicamentView.findViewById(R.id.spinner0);
         ImageView imageClose = medicamentView.findViewById(R.id.immage_remove);
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, nombreList);
         spinner.setAdapter(arrayAdapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        spinner0.setAdapter(adapter);
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

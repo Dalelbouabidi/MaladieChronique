@@ -128,6 +128,8 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("datedenaissance", DatedeNaissanceutilisateur);
                             hashMap.put("telephone", Telephoneutilisateur);
                             hashMap.put("usertype", "0");
+                            hashMap.put("email", Emailutilisateur);
+                            hashMap.put("motdepasse", Motdepasseutilisateur);
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

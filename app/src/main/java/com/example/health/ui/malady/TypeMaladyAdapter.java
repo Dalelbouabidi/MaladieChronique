@@ -78,7 +78,7 @@ public class TypeMaladyAdapter extends RecyclerView.Adapter<TypeMaladyAdapter.Tr
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("TypeMaladyAdapter", "onDataChange : snapshot = " + snapshot.toString());
+                Log.d("TypeMaladyAdapter", "onDataChange : snapshot = " + snapshot);
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     dataSnapshot.getRef().removeValue();
                 }

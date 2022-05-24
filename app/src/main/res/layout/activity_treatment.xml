@@ -29,8 +29,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/black"
                     android:text="Liste des médicaments"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,37 +38,50 @@
                     android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_treatment">
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_treatment"
+                    tools:layout_editor_absoluteX="-52dp">
 
                     <TextView
                         android:id="@+id/tv_med_nom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tv_med_quantity"
+                        android:layout_marginRight="50dp"
                         android:gravity="center"
                         android:text="nom médicament"
+                        app:layout_constraintEnd_toStartOf="@id/tv_med_quantity"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_med_quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tv_med_nom"
+                        android:layout_marginRight="120dp"
                         android:gravity="center"
                         android:text="nombre de prise"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_med_nom"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_malade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="maladie"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_med_quantity"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/divers"
                         android:layout_width="match_parent"
-                        android:background="@color/black"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_med_nom"
+                        android:layout_height="1dp"
                         android:layout_marginTop="10dp"
+                        android:background="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_height="1dp"/>
+                        app:layout_constraintTop_toBottomOf="@+id/tv_malade" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -82,12 +95,53 @@
                     android:id="@+id/tv_analyse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text="Liste des analyses"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/rv_medications"
-                    android:textSize="20sp" />
+                    android:gravity="center"
+                    android:text="Liste des analyses"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_medications" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/header1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_analyse"
+                    tools:layout_editor_absoluteX="-52dp">
+
+                    <TextView
+                        android:id="@+id/tv_ana_nom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dp"
+                        android:gravity="center"
+                        android:text="nom analyse"
+                        app:layout_constraintEnd_toStartOf="@id/tv_malade1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_malade1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="120dp"
+                        android:gravity="center"
+                        android:text="maladie"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_ana_nom"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/divers1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_malade1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_analyses"
@@ -95,25 +149,68 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_analyse" />
+                    app:layout_constraintTop_toBottomOf="@+id/header1" />
 
                 <TextView
                     android:id="@+id/tv_rendez"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text="Liste des rendez-vous"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/rv_analyses"
-                    android:textSize="20sp" />
+                    android:gravity="center"
+                    android:text="Liste des rendez-vous"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_analyses" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/header2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rendez"
+                    tools:layout_editor_absoluteX="-52dp">
+
+                    <TextView
+                        android:id="@+id/tv_rend_nom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dp"
+                        android:gravity="center"
+                        android:text="rendez vous"
+                        app:layout_constraintEnd_toStartOf="@id/tv_malade2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_malade2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="120dp"
+                        android:gravity="center"
+                        android:text="maladie"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_rend_nom"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/divers2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_malade2" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_rendez"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_rendez" />
+                    app:layout_constraintTop_toBottomOf="@+id/header2" />
 
 
                 <Button
@@ -125,10 +222,10 @@
                     android:backgroundTint="#03A9F4"
                     android:text="Ajouter Traitement"
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_rendez"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv_rendez" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -144,8 +241,6 @@
 
         <include layout="@layout/main_nav_drawer" />
 
-
     </RelativeLayout>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

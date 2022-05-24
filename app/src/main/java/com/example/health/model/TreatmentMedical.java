@@ -11,13 +11,15 @@ public class TreatmentMedical {
     private String treatmentName;
     private String treatmentDate;
     private String treatmentHour;
+    private String Cuid;
 
     public TreatmentMedical() { }
 
-    public TreatmentMedical(String treatmentName, String treatmentDate, String treatmentHour) {
+    public TreatmentMedical(String treatmentName, String treatmentDate, String treatmentHour, String Cuid) {
         this.treatmentName = treatmentName;
         this.treatmentDate = treatmentDate;
         this.treatmentHour = treatmentHour;
+        this.Cuid = Cuid;
     }
 
 
@@ -43,6 +45,14 @@ public class TreatmentMedical {
 
     public void setTreatmentHour(String treatmentHour) {
         this.treatmentHour = treatmentHour;
+    }
+
+    public String getCuid() {
+        return Cuid;
+    }
+
+    public void setCuid(String cuid) {
+        Cuid = cuid;
     }
 
     public static ArrayList<TreatmentMedical> getTreatmentMedicalByDate(List<TreatmentMedical> treatmentMedicalList, LocalDate localDate) {
