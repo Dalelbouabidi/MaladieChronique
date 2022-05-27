@@ -8,6 +8,7 @@ import static com.example.health.Constant.CHILD_CALENDAR;
 import static com.example.health.Constant.CHILD_RENDEZVOUS;
 import static com.example.health.Constant.CHILD_TREATMENTS;
 import static com.example.health.Constant.KEY_EXTRA_TITLE;
+import static com.example.health.FirebaseUtils.getDataReference;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -30,7 +31,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.health.AlarmeReceiver;
-import com.example.health.FirebaseUtils;
 import com.example.health.R;
 import com.example.health.model.Analyse;
 import com.example.health.model.RendezVous;
@@ -74,7 +74,7 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
         setContentView(R.layout.activity_traitement_medicale_edit);
         initWidgets();
 
-        databaseReference = FirebaseUtils.getDataReference();
+        databaseReference = getDataReference();
 
         temps = LocalTime.now();
         traitementMedicalDateTV.setText(CalendarUtils.formattedDate(CalendarUtils.choisirDate));
@@ -84,7 +84,7 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String traitement = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Traitement: " + traitement, Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Traitement: " + traitement);
             }
 
             @Override
@@ -98,6 +98,7 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
     }
 
     private void fetchData() {
+
         databaseReference.child(CHILD_TREATMENTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,8 +106,7 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
                     for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         Treatment treatment = snapshot2.getValue(Treatment.class);
                         if (treatment != null) {
-                            list.add( "Médicament : "+ "          "  +treatment.getMedicName() + "             " +treatment.getMedicQuantity());
-
+                            list.add("Médicament : " + "      " + treatment.getMedicName() + "     " + treatment.getMedicQuantity());
                         }
                     }
                 }
@@ -123,10 +123,10 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mydata : snapshot.getChildren()) {
-                    for (DataSnapshot mydata1 : mydata.getChildren()){
+                    for (DataSnapshot mydata1 : mydata.getChildren()) {
                         Analyse analyse = mydata1.getValue(Analyse.class);
-                        if (analyse !=null){
-                            list.add("Analyse :"+"                 "+analyse.getAnalyse());
+                        if (analyse != null) {
+                            list.add("Analyse :" + "           " + analyse.getAnalyse());
                         }
                     }
                 }
@@ -139,14 +139,15 @@ public class TreatmentMedicalEditActivity extends BaseActivity {
 
             }
         });
+
         databaseReference.child(CHILD_RENDEZVOUS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    for (DataSnapshot data1 :data.getChildren()){
+                    for (DataSnapshot data1 : data.getChildren()) {
                         RendezVous rendezVous = data1.getValue(RendezVous.class);
-                        if (rendezVous !=null){
-                            list.add("RendezVous : "+"               "+rendezVous.getRendezvous());
+                        if (rendezVous != null) {
+                            list.add("RendezVous : " + "               " + rendezVous.getRendezvous());
                         }
                     }
                 }

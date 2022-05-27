@@ -157,7 +157,7 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistAnalyse.getChildCount(); i++) {
                 View item = layoutlistAnalyse.getChildAt(i);
                 EditText analyseNom = item.findViewById(R.id.analyse_nom);
-                Spinner spinner = item.findViewById(R.id.rendez_malady);
+                Spinner spinner = item.findViewById(R.id.analyse_malady);
                 String malady = spinner.getSelectedItem().toString();
                 Map<String, String> analyse = new HashMap<>();
                 analyse.put(ANALYSES, analyseNom.getText().toString());
@@ -169,7 +169,7 @@ public class TreatmentAddActivity extends BaseActivity {
             for (int i = 0; i < layoutlistRendez.getChildCount(); i++) {
                 View item = layoutlistRendez.getChildAt(i);
                 EditText rendezNom = item.findViewById(R.id.rendez_nom);
-                Spinner spinner = item.findViewById(R.id.analyse_malady);
+                Spinner spinner = item.findViewById(R.id.rendez_malady);
                 String malady = spinner.getSelectedItem().toString();
 
                 Map<String, String> rendezvous = new HashMap<>();

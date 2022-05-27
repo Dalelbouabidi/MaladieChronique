@@ -3,6 +3,7 @@ package com.example.health.ui.calendar;
 
 import static com.example.health.Constant.CHILD_CALENDAR;
 import static com.example.health.Constant.USERS;
+import static com.example.health.FirebaseUtils.getDataReference;
 import static com.example.health.ui.calendar.CalendarUtils.daysInWeekArray;
 import static com.example.health.ui.calendar.CalendarUtils.monthYearFromDate;
 
@@ -49,10 +50,7 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_semaine_view);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        databaseReference = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
+        databaseReference = getDataReference();
 
 
         initWidgets();
@@ -118,14 +116,6 @@ public class SemaineViewActivity extends BaseActivity implements CalendarAdapter
         List<TreatmentMedical> localTreatmentMedicalList = TreatmentMedical.getTreatmentMedicalByDate(treatmentMedicalList, CalendarUtils.choisirDate);
         TreatmentMedicalAdapter treatmentMedicalAdapter = new TreatmentMedicalAdapter(this, localTreatmentMedicalList);
         traitementMedicalListView.setAdapter(treatmentMedicalAdapter);
-
-
-
-
-
-
-
-
 
     }
 

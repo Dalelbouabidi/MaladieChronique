@@ -2,6 +2,7 @@ package com.example.health.ui.calendar;
 
 import static com.example.health.Constant.CHILD_CALENDAR;
 import static com.example.health.Constant.USERS;
+import static com.example.health.FirebaseUtils.getDataReference;
 import static com.example.health.ui.calendar.CalendarUtils.daysInMonthArray;
 import static com.example.health.ui.calendar.CalendarUtils.monthYearFromDate;
 
@@ -46,10 +47,7 @@ public class CalendarActivity extends BaseActivity implements CalendarAdapter.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gerer_agenda);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        databaseReference = firebaseDatabase.getReference(USERS).child(firebaseUser.getUid());
+        databaseReference = getDataReference();
 
         chargerData();
         initView();
